@@ -17,6 +17,7 @@ import Home from './components/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Recipes from './components/Recipes';
+import AddRecipe from './components/AddRecipe';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -41,6 +42,7 @@ function App() {
         <PrivateRoute path="/recipes" authenticated={authenticated} component={Recipes}></PrivateRoute>
         <PublicRoute path="/register" authenticated={authenticated} component={Register}></PublicRoute>
         <PublicRoute path="/login" authenticated={authenticated} component={Login}></PublicRoute>
+        <PrivateRoute path="/add-recipe" authenticated={authenticated} component={AddRecipe}></PrivateRoute>
       </Switch>
     </Router>
   );

@@ -1,12 +1,13 @@
 import firebase from 'firebase'; 
  
  const config = {
-    apiKey: "AIzaSyCtfNPYdKm2kdu2dczHZ2FmpuxLnV1a_z0",
-    authDomain: "recipe247-a8a8e.firebaseapp.com",
-    projectId: "recipe247-a8a8e",
-    storageBucket: "recipe247-a8a8e.appspot.com",
-    messagingSenderId: "258438322371",
-    appId: "1:258438322371:web:cec9e5eaa802a6b47a6a76"
+  apiKey: "AIzaSyAXp0th4NInyaUlz9o2PUEf9l6OrvpSKxY",
+  authDomain: "wordgam-7b654.firebaseapp.com",
+  databaseURL: "https://wordgam-7b654.firebaseio.com",
+  projectId: "wordgam-7b654",
+  storageBucket: "wordgam-7b654.appspot.com",
+  messagingSenderId: "771404515192",
+  appId: "1:771404515192:web:2a108b26ca888cb8c5aa8d"
   };
   // Initialize Firebase
   firebase.initializeApp(config);
