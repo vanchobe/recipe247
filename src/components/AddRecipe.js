@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { auth, db } from '../services/firebase'
 
-const AddRecipe = props => {
+const AddRecipe = ({ logout, authenticated }) => {
   
   const [user, setUser] = useState(auth().currentUser);
 
@@ -41,13 +41,16 @@ const AddRecipe = props => {
      console.log(writeError);
     }
 }
-
+let logOutButton = '';
+if(user){
+logOutButton = <button onClick={logout}>Log Out</button>;
+console.log(logout);
+}
     
     
     return (
         <div>
-        
-         
+       {logOutButton}
         <form onSubmit={submitValue}>
            <div>
             <input placeholder="Name" name="name" type="text" onChange={e => setName(e.target.value)} value={name}></input>

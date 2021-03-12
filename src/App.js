@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Redirect,
+  Link
 } from "react-router-dom";
 import { auth } from './services/firebase';
 
@@ -28,13 +29,26 @@ function App() {
       if (user) {
         setAuthenticated(true);
         setLoading(false);
-      
       } else {
         setAuthenticated(false);
         setLoading(false);
       }
     })
   });
+
+  const logout = () => {
+    auth().signOut().then((result) => {
+     setAuthenticated(false);
+    })
+  }
+
+
+ 
+
+
+   
+
+
   return loading === true ? <h2>Loading...</h2> : (
     <Router>
       <Switch>
@@ -42,9 +56,13 @@ function App() {
         <PrivateRoute path="/recipes" authenticated={authenticated} component={Recipes}></PrivateRoute>
         <PublicRoute path="/register" authenticated={authenticated} component={Register}></PublicRoute>
         <PublicRoute path="/login" authenticated={authenticated} component={Login}></PublicRoute>
-        <PrivateRoute path="/add-recipe" authenticated={authenticated} component={AddRecipe}></PrivateRoute>
+        <PrivateRoute path="/add-recipe" authenticated={authenticated}  component={() => <AddRecipe logout={logout} />} ></PrivateRoute>
+         
+       
+        
       </Switch>
     </Router>
+    
   );
 }
 
