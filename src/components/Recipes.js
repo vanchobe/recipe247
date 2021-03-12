@@ -22,20 +22,21 @@ const Recipes = props => {
               recipes.push(snap.val());
             });
             setRecipes( recipes );
+            
           });
         } catch (error) {
           setReadError(error.message);
         }
-      });
+      }, []);
     
 
 
     return (
         <div>
            <div className="recipes">
-        {recipes.map(recipe => {
+        {recipes.map((recipe, index) => {
           return <Recipe
-          key={recipe.id}
+          key={index}
           name={recipe.name}
           image= {recipe.image}
           prepareTime = {recipe.prepareTime}
