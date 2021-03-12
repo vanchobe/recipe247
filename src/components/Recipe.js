@@ -5,7 +5,7 @@ const Recipe = ({name, image, prepareTime, portions, description}) => {
     return (
         <div>
             <p>Recipe name : {name}</p>
-            <p>{image}</p>
+            <p><img src={image}/></p>
             <p>Prepare Time: {prepareTime}</p>
             <p>Portions: {portions}</p>
             <p>How to: {description}</p>
