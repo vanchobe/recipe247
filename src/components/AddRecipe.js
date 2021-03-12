@@ -40,11 +40,15 @@ const AddRecipe = ({ logout, authenticated }) => {
      setWriteError(error.message);
      console.log(writeError);
     }
+    setName('');
+    setImage('');
+    setPrepareTime(0);
+    setPortions(1);
+    setDescription('');
 }
 let logOutButton = '';
 if(user){
 logOutButton = <button onClick={logout}>Log Out</button>;
-console.log(logout);
 }
     
     
