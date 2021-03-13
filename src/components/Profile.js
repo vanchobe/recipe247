@@ -31,7 +31,7 @@ const Profile = props => {
               
             });
             if(isSubscribed){
-            setRecipes( recipes );
+            setRecipes( recipes.reverse() );
             }
             
           });
