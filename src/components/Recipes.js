@@ -27,7 +27,7 @@ const Recipes = props => {
               
             });
             if(isSubscribed){
-            setRecipes( recipes );
+            setRecipes( recipes.reverse() );
             }
             
           });
