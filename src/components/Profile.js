@@ -47,10 +47,11 @@ const Profile = props => {
       if(recipes.length > 0 && recipes[0].creatorEmail){
         creatorEmail = recipes[0].creatorEmail
       }
-
+       
       let myRecipes = currentUserProfileId === user.uid ? <h1>My Recipes</h1> : <h1>User {creatorEmail} recipes</h1>
-
-    return  recipes.length === 0 ? <p>You don' have recipes yet! You can add click <Link to='/add-recipe'>- here</Link></p> : 
+      let whoOwnRecipes = currentUserProfileId === user.uid ? 'You don\'t' : 'This user don\'t' ; 
+     
+    return  recipes.length === 0 ? <p>{whoOwnRecipes} have recipes yet! <Link to='/add-recipe'>Add recipe</Link></p> : 
     (
         <div>
             <p>Email: {user.email}</p>
