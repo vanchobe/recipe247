@@ -13,7 +13,7 @@ const Recipes = props => {
 
 
       useEffect(() => {
-         
+        let isSubscribed = true;
         setReadError(null)
         try {
           db.ref("recipes").on("value", snapshot => {
@@ -30,6 +30,7 @@ const Recipes = props => {
         } catch (error) {
           setReadError(error.message);
         }
+        return () => (isSubscribed = false)
       }, []);
     
 
