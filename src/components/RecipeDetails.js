@@ -66,6 +66,7 @@ const Recipes = props => {
           <p>Prepare Time: {recipe.prepareTime}</p>
           <p>Portions: {recipe.portions}</p>
           <p>How to: {recipe.description}</p>
+          <p>Created by: <Link to={`/profile/${recipe.uid}`}>{recipe.creatorEmail}</Link></p>
           {user.uid === creatorId ? <p><Link to={`/edit-recipe/${recipe._id}`}>Edit Recipe</Link></p> : ''}
           {user.uid === creatorId ? <p>
             <button onClick={() => deleteRecipe(recipe._id)}>
