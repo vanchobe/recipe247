@@ -36,9 +36,10 @@ const AddRecipe = ({ logout, authenticated }) => {
       await db.ref("recipes").push({
         ...inputResult,
         timestamp: Date.now(),
-        uid: user.uid
+        uid: user.uid,
+        creatorEmail: user.email
       });
-       history.push('/recipes');
+       history.push(`/profile/${user.uid}`);
     } catch (error) {
       console.log('greshka');
       if(isSubscribed){

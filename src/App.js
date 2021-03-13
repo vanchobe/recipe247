@@ -21,6 +21,7 @@ import Recipes from './components/Recipes';
 import AddRecipe from './components/AddRecipe';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipe from './components/EditRecipe';
+import Profile from './components/Profile';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -61,6 +62,8 @@ function App() {
         <PrivateRoute path="/add-recipe" authenticated={authenticated}  component={() => <AddRecipe logout={logout} />} ></PrivateRoute> 
         <PrivateRoute path="/preview-recipe/:recipeId" authenticated={authenticated}  component={RecipeDetails} ></PrivateRoute>
         <PrivateRoute path="/edit-recipe/:recipeId" authenticated={authenticated}  component={EditRecipe} ></PrivateRoute>
+        <Route path="/profile/:userId" authenticated={authenticated}  component={Profile} ></Route>
+        
       </Switch>
     </Router>
     
