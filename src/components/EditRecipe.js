@@ -3,7 +3,7 @@ import { db } from "../services/firebase"
 import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react';
 import  Recipe  from './Recipe';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
 
 const EditRecipe = props => {
     const [user, setUser] = useState(auth().currentUser);
@@ -17,7 +17,7 @@ const EditRecipe = props => {
     const [creatorId, setCreatorId] = useState('');
  
  
-    
+    const history = useHistory();
     const { recipeId } = useParams();
     const submitValue = async (event) => {
         event.preventDefault();
@@ -34,6 +34,8 @@ const EditRecipe = props => {
          await db.ref('recipes/' + recipeId).update({
            ...inputResult
          });
+        history.push(`/preview-recipe/${recipeId}`);
+         
        } catch (error) {
         setWriteError(error.message);
         console.log(writeError);
@@ -43,7 +45,7 @@ const EditRecipe = props => {
      
 
       useEffect(async () => {
-         
+        let isSubscribed = true;
         setWriteError(null)
         try { 
           db.ref("recipes").on("value", snapshot => {
@@ -55,12 +57,15 @@ const EditRecipe = props => {
             }
             });
            
-           setName(recipes[0].name);
-           setImage(recipes[0].image);
-           setPrepareTime(recipes[0].prepareTime);
-           setPortions(recipes[0].portions);
-           setDescription(recipes[0].description);
-           setCreatorId(recipes[0].uid);
+           if(isSubscribed && recipes.length > 0){
+
+            setName(recipes[0].name);
+            setImage(recipes[0].image);
+            setPrepareTime(recipes[0].prepareTime);
+            setPortions(recipes[0].portions);
+            setDescription(recipes[0].description);
+            setCreatorId(recipes[0].uid);
+           }
 
            
           
@@ -69,6 +74,7 @@ const EditRecipe = props => {
         } catch (error) {
           setWriteError(error.message);
         }
+         return () => (isSubscribed = false)
       }, []);
 
     
