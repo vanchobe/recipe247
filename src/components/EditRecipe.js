@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import  Recipe  from './Recipe';
 import { useParams } from 'react-router-dom';
 
-const Recipes = props => {
+const EditRecipe = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [writeError, setWriteError] = useState(null);
@@ -14,9 +14,10 @@ const Recipes = props => {
     const [prepareTime, setPrepareTime] = useState(0);
     const [portions, setPortions] = useState(1);
     const [description, setDescription] = useState('');
+    const [creatorId, setCreatorId] = useState('');
  
  
-
+    
     const { recipeId } = useParams();
     const submitValue = async (event) => {
         event.preventDefault();
@@ -41,11 +42,11 @@ const Recipes = props => {
    }
      
 
-      useEffect(() => {
+      useEffect(async () => {
          
         setWriteError(null)
         try { 
-         db.ref("recipes").on("value", snapshot => {
+          db.ref("recipes").on("value", snapshot => {
             let recipes = [];
             snapshot.forEach((snap) => {
                 let _id = snap.ref_.path.pieces_[1];
@@ -59,15 +60,23 @@ const Recipes = props => {
            setPrepareTime(recipes[0].prepareTime);
            setPortions(recipes[0].portions);
            setDescription(recipes[0].description);
+           setCreatorId(recipes[0].uid);
+
+           
+          
+          
           });
         } catch (error) {
           setWriteError(error.message);
         }
       }, []);
+
+    
+     
     
     
     return (
-        <div>
+        user.uid !== creatorId ? <h2>You don't own this recipe! and can't edit</h2> :  <div>
            <div className="recipes">
         <form onSubmit={submitValue}>
 <div>
@@ -99,8 +108,8 @@ const Recipes = props => {
     )
 }
 
-Recipes.propTypes = {
+EditRecipe.propTypes = {
 
 }
 
-export default Recipes
+export default EditRecipe
