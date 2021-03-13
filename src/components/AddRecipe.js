@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { auth, db } from '../services/firebase'
 
+import { useHistory } from 'react-router-dom';
+
 const AddRecipe = ({ logout, authenticated }) => {
   
   const [user, setUser] = useState(auth().currentUser);
@@ -14,9 +16,10 @@ const AddRecipe = ({ logout, authenticated }) => {
    const [portions, setPortions] = useState(1);
    const [description, setDescription] = useState('');
 
-
+   const history = useHistory();
 
    const submitValue = async (event) => {
+     let isSubscribed = true;
      event.preventDefault();
     const inputResult = {
         'name' : name,
@@ -25,8 +28,9 @@ const AddRecipe = ({ logout, authenticated }) => {
         'portions' : portions,
         'description': description
     }
-    
+    if(isSubscribed){
     setWriteError(null);
+    }
     try {
     
       await db.ref("recipes").push({
@@ -34,17 +38,16 @@ const AddRecipe = ({ logout, authenticated }) => {
         timestamp: Date.now(),
         uid: user.uid
       });
-       console.log('im here');
+       history.push('/recipes');
     } catch (error) {
       console.log('greshka');
+      if(isSubscribed){
      setWriteError(error.message);
+      }
      console.log(writeError);
     }
-    setName('');
-    setImage('');
-    setPrepareTime(0);
-    setPortions(1);
-    setDescription('');
+    
+   isSubscribed = false;
 }
 let logOutButton = '';
 if(user){

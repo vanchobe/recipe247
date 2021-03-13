@@ -30,9 +30,12 @@ const Recipes = props => {
               recipes.push({...snap.val(), _id})
             }
             });
+           
+            if(isSubscribed){
+                if(recipes.length > 0){
             setRecipes( recipes );
-            if(recipes.length > 0){
             setCreatorId(recipes[0].uid);
+                }
             }
             
           });

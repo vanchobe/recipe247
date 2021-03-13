@@ -14,7 +14,9 @@ const Recipes = props => {
 
       useEffect(() => {
         let isSubscribed = true;
+        if(isSubscribed){
         setReadError(null)
+        }
         try {
           db.ref("recipes").on("value", snapshot => {
             let recipes = [];
@@ -24,11 +26,15 @@ const Recipes = props => {
               recipes.push({...snap.val(), _id});
               
             });
+            if(isSubscribed){
             setRecipes( recipes );
+            }
             
           });
         } catch (error) {
+          if(isSubscribed){
           setReadError(error.message);
+          }
         }
         return () => (isSubscribed = false)
       }, []);
