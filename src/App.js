@@ -1,6 +1,7 @@
 import './App.css';
 
 import { useState, useEffect  } from 'react';
+import { Container } from 'react-bootstrap';
 
 import {
   Route,
@@ -19,6 +20,7 @@ import AddRecipe from './components/AddRecipe/AddRecipe';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipe from './components/EditRecipe/EditRecipe';
 import Profile from './components/Profile/Profile';
+import Header from './components/Header';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -44,6 +46,8 @@ function App() {
 
   return loading === true ? <h2>Loading...</h2> : (
     <Router>
+      <Header/>
+      <Container fluid="md">
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <PrivateRoute path="/recipes" authenticated={authenticated} component={Recipes}></PrivateRoute>
@@ -55,6 +59,7 @@ function App() {
         <Route path="/profile/:userId" authenticated={authenticated}  component={Profile} ></Route>
         
       </Switch>
+      </Container>
     </Router>
     
   );
