@@ -1,8 +1,6 @@
 import { auth } from "../services/firebase";
 import { db } from "../services/firebase"
-import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react';
-import  Recipe  from './Recipe';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 
 const EditRecipe = props => {
@@ -44,11 +42,11 @@ const EditRecipe = props => {
    }
      
 
-      useEffect(async () => {
+      useEffect(() => {
         let isSubscribed = true;
         setWriteError(null)
         try { 
-          db.ref("recipes").on("value", snapshot => {
+        db.ref("recipes").on("value", snapshot => {
             let recipes = [];
             snapshot.forEach((snap) => {
                 let _id = snap.ref_.path.pieces_[1];
@@ -67,9 +65,6 @@ const EditRecipe = props => {
             setCreatorId(recipes[0].uid);
            }
 
-           
-          
-          
           });
         } catch (error) {
           setWriteError(error.message);
@@ -77,10 +72,6 @@ const EditRecipe = props => {
          return () => (isSubscribed = false)
       }, []);
 
-    
-     
-    
-    
     return (
         user.uid !== creatorId ? <h2>You don't own this recipe! and can't edit</h2> :  <div>
            <div className="recipes">
@@ -103,8 +94,7 @@ const EditRecipe = props => {
 {writeError ? <p>{writeError}</p> : null}
 <button type="submit">Send</button>
 </form>
- 
-           
+
         )
       </div>
       <div>
@@ -112,10 +102,6 @@ const EditRecipe = props => {
       </div>
         </div>
     )
-}
-
-EditRecipe.propTypes = {
-
 }
 
 export default EditRecipe

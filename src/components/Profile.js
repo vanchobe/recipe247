@@ -1,6 +1,5 @@
 import { auth } from "../services/firebase";
 import { db } from "../services/firebase"
-import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react';
 import  Recipe  from './Recipe';
 import { Link, useLocation } from "react-router-dom";
@@ -12,7 +11,7 @@ const Profile = props => {
     const [readError, setReadError] = useState(null);
 
     const locationUrl = useLocation().pathname;
-     const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 9);
+    const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 9);
     
       useEffect(() => {
         let isSubscribed = true;
@@ -75,10 +74,6 @@ const Profile = props => {
       </div>
         </div>
     )
-}
-
-Profile.propTypes = {
-
 }
 
 export default Profile

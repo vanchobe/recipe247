@@ -1,27 +1,19 @@
 import { useState } from 'react'
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Link } from "react-router-dom";
 
 import { signIn } from './auth';
-
 
 const Login = props => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const handleEmail = (event) => {
-       
         setEmail(event.target.value)
-            
-         
       }
       const handlePassword = (event) => {
-       
-        setPassword(event.target.value)
-            
-         
+        setPassword(event.target.value) 
       }
      const handleSubmit = async (event) => {
         event.preventDefault();  
@@ -78,10 +70,6 @@ const Login = props => {
         </form>
         </div>
     )
-}
-
-Login.propTypes = {
-
 }
 
 export default Login

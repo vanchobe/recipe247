@@ -1,26 +1,16 @@
 import { useState } from 'react'
-import PropTypes from 'prop-types'
-
 import { Link } from 'react-router-dom';
 import { signUp } from './auth';
-
-
 
 const Register = props => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const handleEmail = (event) => {
-       
-        setEmail(event.target.value)
-            
-         
+        setEmail(event.target.value) 
       }
       const handlePassword = (event) => {
-       
-        setPassword(event.target.value)
-            
-         
+        setPassword(event.target.value) 
       }
      const handleSubmit = async (event) => {
         event.preventDefault();  
@@ -55,10 +45,6 @@ const Register = props => {
         </form>
         </div>
     )
-}
-
-Register.propTypes = {
-
 }
 
 export default Register

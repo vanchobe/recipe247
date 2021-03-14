@@ -1,7 +1,5 @@
-
 import {
   Route,
-  BrowserRouter as Router,
   Redirect,
 } from "react-router-dom";
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
