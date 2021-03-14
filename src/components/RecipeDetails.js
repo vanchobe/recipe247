@@ -1,23 +1,17 @@
 import { auth } from "../services/firebase";
 import { db } from "../services/firebase"
-import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react';
-import  Recipe  from './Recipe';
 import { Link, useParams, useHistory } from 'react-router-dom';
 
 
 const Recipes = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
-    const [content, setContent] = useState('');
     const [readError, setReadError] = useState(null);
-    const [writeError, setWriteError] = useState(null);
     const [creatorId, setCreatorId] = useState('');
 
     const { recipeId } = useParams();
     
-     
-
       useEffect(() => {
         let isSubscribed = true;
         setReadError(null)
@@ -53,8 +47,6 @@ const Recipes = props => {
         })
         .catch((error)=>{ setReadError(error.message)})
     }
-    
-
 
     return (
         <div>
@@ -83,9 +75,4 @@ const Recipes = props => {
         </div>
     )
 }
-
-Recipes.propTypes = {
-
-}
-
 export default Recipes

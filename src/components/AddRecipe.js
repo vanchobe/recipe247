@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import PropTypes from 'prop-types'
 
 import { auth, db } from '../services/firebase'
 
@@ -54,8 +53,7 @@ let logOutButton = '';
 if(user){
 logOutButton = <button onClick={logout}>Log Out</button>;
 }
-    
-    
+
     return (
         <div>
        {logOutButton}
@@ -83,10 +81,6 @@ logOutButton = <button onClick={logout}>Log Out</button>;
         </div>
       </div>
     )
-}
-
-AddRecipe.propTypes = {
-
 }
 
 export default AddRecipe

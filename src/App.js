@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 
 import { useState, useEffect  } from 'react';
@@ -7,8 +6,6 @@ import {
   Route,
   BrowserRouter as Router,
   Switch,
-  Redirect,
-  Link
 } from "react-router-dom";
 import { auth } from './services/firebase';
 
@@ -44,13 +41,6 @@ function App() {
      setAuthenticated(false);
     })
   }
-
-
- 
-
-
-   
-
 
   return loading === true ? <h2>Loading...</h2> : (
     <Router>
