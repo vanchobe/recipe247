@@ -15,10 +15,10 @@ import Home from './components/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Recipes from './components/Recipes';
-import AddRecipe from './components/AddRecipe';
+import AddRecipe from './components/AddRecipe/AddRecipe';
 import RecipeDetails from './components/RecipeDetails';
-import EditRecipe from './components/EditRecipe';
-import Profile from './components/Profile';
+import EditRecipe from './components/EditRecipe/EditRecipe';
+import Profile from './components/Profile/Profile';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);

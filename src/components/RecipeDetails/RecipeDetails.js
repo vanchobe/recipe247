@@ -1,5 +1,5 @@
-import { auth } from "../services/firebase";
-import { db } from "../services/firebase"
+import { auth } from "../../services/firebase";
+import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 

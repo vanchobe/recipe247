@@ -1,14 +1,18 @@
-import { auth } from "../services/firebase";
-import { db } from "../services/firebase"
+import { auth } from "../../services/firebase";
+import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
-import  Recipe  from './Recipe';
+import  Recipe  from '../Recipe/Recipe';
+import { Link, useLocation } from "react-router-dom";
 
-const Recipes = props => {
+
+const Profile = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
 
-
+    const locationUrl = useLocation().pathname;
+    const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 9);
+    
       useEffect(() => {
         let isSubscribed = true;
         if(isSubscribed){
@@ -20,7 +24,9 @@ const Recipes = props => {
             snapshot.forEach((snap) => {
             
               let _id = snap.ref_.path.pieces_[1];
+              if(snap.val().uid === currentUserProfileId){
               recipes.push({...snap.val(), _id});
+              }
               
             });
             if(isSubscribed){
@@ -35,9 +41,21 @@ const Recipes = props => {
         }
         return () => (isSubscribed = false)
       }, []);
-
-    return (
+      
+      let creatorEmail = '';
+      if(recipes.length > 0 && recipes[0].creatorEmail){
+        creatorEmail = recipes[0].creatorEmail
+      }
+       
+      let myRecipes = currentUserProfileId === user.uid ? <h1>My Recipes</h1> : <h1>User {creatorEmail} recipes</h1>
+      let whoOwnRecipes = currentUserProfileId === user.uid ? 'You don\'t' : 'This user don\'t' ; 
+     
+    return  recipes.length === 0 ? <p>{whoOwnRecipes} have recipes yet! <Link to='/add-recipe'>Add recipe</Link></p> : 
+    (
         <div>
+            <p>Email: {user.email}</p>
+            <p>Total Recipes Added: {recipes.length}</p>
+          {myRecipes}
            <div className="recipes">
         {recipes.map((recipe, index) => {
           return <Recipe
@@ -58,4 +76,4 @@ const Recipes = props => {
     )
 }
 
-export default Recipes
+export default Profile
