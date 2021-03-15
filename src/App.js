@@ -21,6 +21,7 @@ import AddRecipe from './components/AddRecipe/AddRecipe';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipe from './components/EditRecipe/EditRecipe';
 import Profile from './components/Profile/Profile';
+import UserProfile from './components/UserProfile';
 import Header from './components/Header';
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         <PrivateRoute path="/preview-recipe/:recipeId" authenticated={authenticated}  component={RecipeDetails} ></PrivateRoute>
         <PrivateRoute path="/edit-recipe/:recipeId" authenticated={authenticated}  component={EditRecipe} ></PrivateRoute>
         <Route path="/profile/:userId" authenticated={authenticated}  component={Profile} ></Route>
+        <Route path="/user-profile/:userId" authenticated={authenticated}  component={UserProfile} ></Route>
         
       </Switch>
       </Container>
