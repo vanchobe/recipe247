@@ -47,4 +47,47 @@ code {
   border-top: 1px solid #FFFFFF;
 }
 
+
+/* change hamburger color  */
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
 /* end of change default navbar colors  */
+
+
+/* add styles of pagination */
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #242582;
+  border-color: #242582;
+}
+.page-link {
+  color: #242582;
+}
+.page-link:hover {
+  color: #242582;
+}
+/* end of add styles of pagination */
+
+/* change btn primary color */
+
+.btn-primary {
+  color: #fff;
+  background-color: #242582;
+  border-color: #242582;
+}
+
+/* end of change btn primary color */
+
+
+
+/* change color of font awesome icons */
+.fa-grip-horizontal,
+.fa-clock,
+.fa-file-signature {
+  color: #242582;
+  font-size: 1rem;
+}
+
+/* end of change color of font awesome icons */

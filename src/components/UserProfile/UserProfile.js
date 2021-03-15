@@ -5,7 +5,7 @@ import  Recipe  from '../Recipe/Recipe';
 import { Link, useLocation } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import { Row, Col } from 'react-bootstrap';
-import styles from './Profile.module.css';
+import styles from './UserProfile.module.css';
 
 const Profile = props => {
     const [user, setUser] = useState(auth().currentUser);
@@ -14,11 +14,10 @@ const Profile = props => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const locationUrl = useLocation().pathname;
-    const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 9);
+    const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 14);
     
 
-
-
+ 
     const loadRecipes = (isSubscribed) => {
       if(isSubscribed){
         setReadError(null)
@@ -60,7 +59,7 @@ const Profile = props => {
       }
        
       let myRecipes = currentUserProfileId === user.uid ? <h1>Моите рецепти</h1> : <h1>Рецептите на {creatorEmail}</h1>
-      let whoOwnRecipes = currentUserProfileId === user.uid ? 'Вие нямате' : 'Този потребител няма' ; 
+     
 
       const PER_PAGE = 4;
       const COLS_PER_ROW = 4;
@@ -114,7 +113,7 @@ const Profile = props => {
                 
         </div>
         </div>)
-    return  recipes.length === 0 ? <p>{whoOwnRecipes} добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
+    return  recipes.length === 0 ? <p>Този потребител няма добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
     (
         <div>
           <Row> 

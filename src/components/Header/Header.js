@@ -29,7 +29,7 @@ class Header extends Component {
   
     render() {
       const isAuth = this.props.authenticated ? <NavDropdown title="Профил" id="basic-nav-dropdown">
-      <NavDropdown.Item as={Link} to={`profile/${this.state.user.uid}`}>Мойте рецепти</NavDropdown.Item>
+      <NavDropdown.Item as={Link} to={`/profile/${this.state.user.uid}`}>Мойте рецепти</NavDropdown.Item>
       <NavDropdown.Item as={Link} to='/add-recipe'>Добави Рецепта</NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item onClick={this.props.logout}>Изход</NavDropdown.Item>
