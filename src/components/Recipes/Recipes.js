@@ -44,8 +44,8 @@ const Recipes = props => {
         return () => (isSubscribed = false)
       }, []);
 
-      const PER_PAGE = 6;
-      const COLS_PER_ROW = 3;
+      const PER_PAGE = 4;
+      const COLS_PER_ROW = 4;
       const offset = currentPage * PER_PAGE;
       let pagingRecipes = [...recipes];
       const currentPageRecipes = pagingRecipes
@@ -90,20 +90,19 @@ const Recipes = props => {
         <div>
            <div className={style.recipesContainer}>
            <ReactPaginate
-        previousLabel={"← Previous"}
-        nextLabel={"Next →"}
+        previousLabel={"←"}
+        nextLabel={"→"}
         pageCount={pageCount}
         onPageChange={handlePageClick}
-        containerClassName={"pagination"}
-        previousLinkClassName={"pagination__link"}
-        nextLinkClassName={"pagination__link"}
+        containerClassName={"pagination mt-3 justify-content-md-center"}
+        previousLinkClassName={"page-link"}
+        nextLinkClassName={"page-link"}
         disabledClassName={"pagination__link--disabled"}
-        activeClassName={"pagination__link--active"}
+        activeClassName={"page-item active"}
+        pageLinkClassName={"page-link"}
+        breakLabel={3}
       />
         {currentPageRecipes}
-      </div>
-      <div>
-        Login in as: <strong className={style.loggedWith}>{user.email}</strong>
       </div>
         </div>
     )

@@ -59,11 +59,11 @@ const Profile = props => {
         creatorEmail = recipes[0].creatorEmail
       }
        
-      let myRecipes = currentUserProfileId === user.uid ? <h1>My Recipes</h1> : <h1>User {creatorEmail} recipes</h1>
-      let whoOwnRecipes = currentUserProfileId === user.uid ? 'You don\'t' : 'This user don\'t' ; 
+      let myRecipes = currentUserProfileId === user.uid ? <h1>Моите рецепти</h1> : <h1>Рецептите на {creatorEmail}</h1>
+      let whoOwnRecipes = currentUserProfileId === user.uid ? 'Вие нямате' : 'Този потребител няма' ; 
 
-      const PER_PAGE = 3;
-      const COLS_PER_ROW = 3;
+      const PER_PAGE = 4;
+      const COLS_PER_ROW = 4;
       const offset = currentPage * PER_PAGE;
       let pagingRecipes = [...recipes];
       const currentPageRecipes = pagingRecipes
@@ -97,28 +97,27 @@ const Profile = props => {
             function handlePageClick({ selected: selectedPage }) {
               setCurrentPage(selectedPage);
           }
-    return  recipes.length === 0 ? <p>{whoOwnRecipes} have recipes yet! <Link to='/add-recipe'>Add recipe</Link></p> : 
+    return  recipes.length === 0 ? <p>{whoOwnRecipes} добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
     (
         <div>
-            <p>Email: {user.email}</p>
-            <p>Total Recipes Added: {recipes.length}</p>
+            <p>Имейл: {user.email}</p>
+            <p>Добавени рецепти: {recipes.length}</p>
           {myRecipes}
            <div className="recipes">
            <ReactPaginate
-        previousLabel={"← Previous"}
-        nextLabel={"Next →"}
+        previousLabel={"←"}
+        nextLabel={"→"}
         pageCount={pageCount}
         onPageChange={handlePageClick}
-        containerClassName={"pagination"}
-        previousLinkClassName={"pagination__link"}
-        nextLinkClassName={"pagination__link"}
+        containerClassName={"pagination mt-3 justify-content-md-center"}
+        previousLinkClassName={"page-link"}
+        nextLinkClassName={"page-link"}
         disabledClassName={"pagination__link--disabled"}
-        activeClassName={"pagination__link--active"}
+        activeClassName={"page-item active"}
+        pageLinkClassName={"page-link"}
+        breakLabel={3}
       />
         {currentPageRecipes}
-      </div>
-      <div>
-        Login in as: <strong>{user.email}</strong>
       </div>
         </div>
     )
