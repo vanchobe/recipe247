@@ -7,6 +7,7 @@ import {
   Route,
   BrowserRouter as Router,
   Switch,
+  useHistory
 } from "react-router-dom";
 import { auth } from './services/firebase';
 
@@ -25,6 +26,8 @@ import Header from './components/Header';
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(auth().currentUser);
+   
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
@@ -46,7 +49,7 @@ function App() {
 
   return loading === true ? <h2>Loading...</h2> : (
     <Router>
-      <Header/>
+      <Header authenticated={authenticated} logout={logout} />
       <Container fluid="md">
       <Switch>
         <Route exact path="/" component={Home}></Route>
