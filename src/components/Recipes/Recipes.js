@@ -44,7 +44,7 @@ const Recipes = props => {
         return () => (isSubscribed = false)
       }, []);
 
-      const PER_PAGE = 5;
+      const PER_PAGE = 6;
       const COLS_PER_ROW = 3;
       const offset = currentPage * PER_PAGE;
       let pagingRecipes = [...recipes];
