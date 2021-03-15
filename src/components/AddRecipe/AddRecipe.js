@@ -38,6 +38,7 @@ const AddRecipe = ({ logout, authenticated }) => {
         uid: user.uid,
         creatorEmail: user.email
       });
+      isSubscribed = false;
        history.push(`/profile/${user.uid}`);
     } catch (error) {
       console.log('greshka');
@@ -49,14 +50,10 @@ const AddRecipe = ({ logout, authenticated }) => {
     
    isSubscribed = false;
 }
-let logOutButton = '';
-if(user){
-logOutButton = <button onClick={logout}>Log Out</button>;
-}
 
     return (
         <div>
-       {logOutButton}
+     
         <form onSubmit={submitValue}>
            <div>
             <input placeholder="Name" name="name" type="text" onChange={e => setName(e.target.value)} value={name}></input>
