@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 
 import { signIn } from './auth';
 
+import { Form, Button, Container } from 'react-bootstrap';
+
+import styles from './Login.module.css';
+
 const Login = props => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('');
@@ -25,51 +29,54 @@ const Login = props => {
         }
       } 
     return (
-        <div>
-                    <form
+      <Container className='col-md-6 mt-3'>
+                    <Form
           autoComplete="off"
           onSubmit={handleSubmit}
+          className={styles.bdForm}
         >
           <h1>
-            Login to
-            <Link to="/">
-              Recipes
+            Вход в <Link to="/">
+              Recipes 247
             </Link>
           </h1>
-          <p>
-            Fill in the form below to login to your account.
-          </p>
-          <div>
-            <input
+          <Form.Group controlId="email">
+    <Form.Label>Имейл Адрес</Form.Label>
+    <Form.Control 
               placeholder="Email"
               name="email"
               type="email"
               onChange={handleEmail}
-              value={email}
-            />
-          </div>
-          <div>
-            <input
+              value={email} />
+  </Form.Group>
+
+  <Form.Group controlId="password">
+    <Form.Label>Парола</Form.Label>
+    <Form.Control  
               placeholder="Password"
               name="password"
               onChange={handlePassword}
               value={password}
-              type="password"
-            />
-          </div>
+              type="password" />
+  </Form.Group>
+          
+          
           <div>
             {error ? (
               <p>{error}</p>
             ) : null}
-            <button type="submit">Login</button>
+            <Button variant="primary" type="submit">
+            Вход
+           </Button>
           </div>
           <hr />
-          <p>
-            Don't have an account? <Link to="/register">Sign up</Link>
-          </p>
-        </form>
-        </div>
+         
+          <Form.Text className="font-weight-bold">
+          Нямате акаунт? <Link to="/register">Регистрация</Link>
+          </Form.Text>
+        </Form>
+        </Container>
     )
 }
 
-export default Login
+export default Login  
