@@ -75,7 +75,12 @@ code {
 .btn-primary {
   color: #fff;
   background-color: #242582;
-  border-color: #242582;
+  border-color: #e27d60;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #e27d60;
+  border-color: #e27d60;
 }
 
 /* end of change btn primary color */

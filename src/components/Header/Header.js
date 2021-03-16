@@ -47,8 +47,8 @@ class Header extends Component {
             {isAuth}
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+            <FormControl type="text" placeholder="Търси рецепта..." className="mr-sm-2" />
+            <Button variant="primary">Търси</Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
