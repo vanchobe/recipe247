@@ -43,7 +43,7 @@ const Recipes = props => {
       const deleteRecipe = (id) => {
         db.ref('recipes/' + id).remove()
         .then(()=>{
-            history.push('/recipes')
+          history.push(`/profile/${user.uid}`);
         })
         .catch((error)=>{ setReadError(error.message)})
     }
