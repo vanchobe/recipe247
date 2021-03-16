@@ -43,7 +43,7 @@ const Login = props => {
           <Form.Group controlId="email">
     <Form.Label>Имейл Адрес</Form.Label>
     <Form.Control 
-              placeholder="Email"
+              placeholder="Имейл..."
               name="email"
               type="email"
               onChange={handleEmail}
@@ -53,7 +53,7 @@ const Login = props => {
   <Form.Group controlId="password">
     <Form.Label>Парола</Form.Label>
     <Form.Control  
-              placeholder="Password"
+              placeholder="Парола..."
               name="password"
               onChange={handlePassword}
               value={password}
