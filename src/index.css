@@ -90,9 +90,10 @@ code {
 /* change color of font awesome icons */
 .fa-grip-horizontal,
 .fa-clock,
-.fa-file-signature {
+.fa-file-signature,
+.fa-bread-slice,
+.fa-image {
   color: #242582;
   font-size: 1rem;
 }
-
 /* end of change color of font awesome icons */
