@@ -24,6 +24,10 @@ class Header extends Component {
       readError: null,
     };
   }
+
+  componentDidMount(){
+    this.setState({user: auth().currentUser});
+  }
  
   
   
