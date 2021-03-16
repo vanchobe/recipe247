@@ -24,7 +24,7 @@ const Recipe = ({name, image, prepareTime, portions, description, _id, index}) =
           <Card.Text>{prepareTimeIcon} {prepareTime} минути</Card.Text>
           <Card.Text>{howToCookIcon} {description.length > 10 ? description.substring(0,10) + '...' : description}</Card.Text>
            
-          <Button as={Link} to={`/preview-recipe/${_id}`} variant="primary">View Recipe</Button>
+          <Button as={Link} to={`/preview-recipe/${_id}`} variant="primary">Виж Рецептата</Button>
         </Card.Body>
       </Card>
       </Row>
