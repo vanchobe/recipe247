@@ -25,8 +25,7 @@ const Header = props =>    {
    
   const user = useContext(UserContext);
  
-  console.log(user);
-  
+   
     
       const isAuth = user ? <NavDropdown title="Профил" id="basic-nav-dropdown">
       <NavDropdown.Item as={Link} to={`/profile/${props.user ? props.user.uid : ''}`}>Мойте рецепти</NavDropdown.Item>
