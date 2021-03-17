@@ -5,9 +5,10 @@ import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import ReactPaginate from 'react-paginate';
 import { Row, Col } from 'react-bootstrap'; 
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
 const Recipes = props => {
-    const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
@@ -102,7 +103,10 @@ const Recipes = props => {
         pageLinkClassName={"page-link"}
         breakLabel={3}
       />
-        {currentPageRecipes}
+        {(currentPageRecipes.length > 0) ? currentPageRecipes : 
+        <Loader className="recipes-loader" type="Bars" color="#242582" height={80} width={80} />
+         
+      }
       </div>
         </div>
     )

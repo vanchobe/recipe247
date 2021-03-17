@@ -2,7 +2,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
+  const history = useHistory();
     return (
       <Route
         {...rest}
