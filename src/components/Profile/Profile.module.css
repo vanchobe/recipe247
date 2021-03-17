@@ -68,3 +68,9 @@
    .name {
     font-size: 1.2rem
   } 
+  .addRecipeBtn {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}

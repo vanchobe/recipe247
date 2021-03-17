@@ -66,7 +66,7 @@ const Recipes = props => {
         
            <Container className="mt-2 d-flex justify-content-center">
         {recipes.map((recipe, index) => {
-          return   <Card key={index} style={{ width: '50%', maxHeight: '20%' }}>
+          return   <Card key={index} className={styles.cardContainer}>
               <Card.Img variant="top" src={recipe.image} />  
               <Card.Body className={styles.imageOverlay}>
               <Card.Title>Рецепта: {recipe.name}</Card.Title>
