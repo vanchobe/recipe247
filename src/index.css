@@ -98,6 +98,9 @@ code {
 }
 /* end of change color of font awesome icons */
 
+
+/* Change recipe loader */
+
 .recipes-loader{
   position: fixed;
   top: 30%;
