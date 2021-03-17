@@ -26,6 +26,7 @@ import EditRecipe from './components/EditRecipe/EditRecipe';
 import Profile from './components/Profile/Profile';
 import UserProfile from './components/UserProfile';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
@@ -79,6 +80,7 @@ function App() {
         
       </Switch>
       </Container>
+      <Footer />
     </Router>
     </UserContext.Provider>
     
