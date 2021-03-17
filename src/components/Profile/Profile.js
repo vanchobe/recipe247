@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import { Link, useLocation } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import styles from './Profile.module.css';
 import {UserContext} from '../../helpers/UserContext';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -117,7 +117,7 @@ const Profile = props => {
                 
         </div>
         </div>)
-    return  recipes.length === 0 ? <p>Вие нямате добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
+    return  recipes.length === 0 ? <div className='mt-3 d-flex justify-content-center btn-danger'>Вие нямате добавени рецепти! -> <Link className={styles.addRecipeBtn} to='/add-recipe'>Добави рецепта</Link></div> : 
     (
         <div>
           <Row> 
