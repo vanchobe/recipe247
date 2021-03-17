@@ -1,14 +1,16 @@
 import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import { Link, useLocation } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import { Row, Col } from 'react-bootstrap';
 import styles from './Profile.module.css';
+import {UserContext} from '../../helpers/UserContext';
+
 
 const Profile = props => {
-    const [user, setUser] = useState(auth().currentUser);
+    
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
@@ -16,8 +18,7 @@ const Profile = props => {
     const locationUrl = useLocation().pathname;
     const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 9);
     
-
-
+    const user = useContext(UserContext);
 
     const loadRecipes = (isSubscribed) => {
       if(isSubscribed){
@@ -51,6 +52,7 @@ const Profile = props => {
         let isSubscribed = true;
         loadRecipes(isSubscribed)
         
+        
         return () => (isSubscribed = false)
       }, []);
       
@@ -59,8 +61,7 @@ const Profile = props => {
         creatorEmail = recipes[0].creatorEmail
       }
        
-      let myRecipes = currentUserProfileId === user.uid ? <h1>Моите рецепти</h1> : <h1>Рецептите на {creatorEmail}</h1>
-      let whoOwnRecipes = currentUserProfileId === user.uid ? 'Вие нямате' : 'Този потребител няма' ; 
+       
 
       const PER_PAGE = 4;
       const COLS_PER_ROW = 4;
@@ -106,7 +107,7 @@ const Profile = props => {
                   <img className="img-fluid" src="/no-picture.jpg" />
                 </div>
                 <div className={styles['team-content']}>
-                  <h3 className={styles.name}>{creatorEmail}</h3>
+                  <h3 className={styles.name}>{user.email}</h3>
                   <h4 className={styles.title}>Добавени рецепти: {recipes.length}</h4>
                 </div>
               </div>
@@ -114,7 +115,7 @@ const Profile = props => {
                 
         </div>
         </div>)
-    return  recipes.length === 0 ? <p>{whoOwnRecipes} добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
+    return  recipes.length === 0 ? <p>Вие нямате добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
     (
         <div>
           <Row> 
