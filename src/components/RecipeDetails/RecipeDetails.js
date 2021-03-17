@@ -2,6 +2,20 @@ import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
+import {Card, Button, Container, Row, Col} from 'react-bootstrap';
+import styles from './RecipeDetails.module.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClock, faFileSignature, faGripHorizontal, faUser, faEdit, faTrash  } from '@fortawesome/free-solid-svg-icons'
+
+const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />
+const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />
+const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />
+const userIcon = <FontAwesomeIcon icon={faUser} />
+const editIcon = <FontAwesomeIcon icon={faEdit} />
+const deleteIcon = <FontAwesomeIcon icon={faTrash} />
+
+
 
 
 const Recipes = props => {
@@ -49,30 +63,36 @@ const Recipes = props => {
     }
 
     return (
-        <div>
-           <div className="recipes">
+        
+           <Container className="mt-2 d-flex justify-content-center">
         {recipes.map((recipe, index) => {
-          return  <div key={index}>
-               <p>Recipe name : {recipe.name}</p>
-          <p><img src={recipe.image}/></p>
-          <p>Prepare Time: {recipe.prepareTime}</p>
-          <p>Portions: {recipe.portions}</p>
-          <p>How to: {recipe.description}</p>
-          <p>Created by: {user.uid === creatorId ? <Link to={`/profile/${recipe.uid}`}>{recipe.creatorEmail}</Link> : <Link to={`/user-profile/${recipe.uid}`}>{recipe.creatorEmail}</Link>}</p>
-          {user.uid === creatorId ? <p><Link to={`/edit-recipe/${recipe._id}`}>Edit Recipe</Link></p> : ''}
-          {user.uid === creatorId ? <p>
-            <button onClick={() => deleteRecipe(recipe._id)}>
-            Delete Recipe
-            </button>
-              </p> : ''}
-          </div>
+          return   <Card key={index} style={{ width: '50%', maxHeight: '20%' }}>
+              <Card.Img variant="top" src={recipe.image} />  
+              <Card.Body className={styles.imageOverlay}>
+              <Card.Title>Рецепта: {recipe.name}</Card.Title>
+          
+              <Card.Text>{prepareTimeIcon} {recipe.prepareTime} минути</Card.Text>
+              <Card.Text>{portionsIcon} {recipe.portions} {recipe.portions > 1 ? 'порции' : 'порция'}</Card.Text>
+              <Card.Text>{howToCookIcon} {recipe.description}</Card.Text>
+              
+            <Row className="mb-2">  
+          {user.uid === creatorId ? <Col><Button as={Link} to={`/edit-recipe/${recipe._id}`}>{editIcon} Редактирай</Button></Col> : ''}
+          {user.uid === creatorId ? <Col>
+            <Button variant="primary" onClick={() => deleteRecipe(recipe._id)}>
+            {deleteIcon} Изтрии
+            </Button>
+            </Col> : ''}
+              </Row>
+              <Card.Footer>
+              <p>Добавена от: {user.uid === creatorId ? <Link to={`/profile/${recipe.uid}`}>{userIcon} {recipe.creatorEmail}</Link> : <Link to={`/user-profile/${recipe.uid}`}>{recipe.creatorEmail}</Link>}</p>
+              </Card.Footer>
+              </Card.Body>
+          </Card>
            
         })}
-      </div>
-      <div>
-        Login in as: <strong>{user.email}</strong>
-      </div>
-        </div>
+      </Container>
+      
+        
     )
 }
 export default Recipes

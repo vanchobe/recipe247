@@ -7,6 +7,8 @@ import ReactPaginate from 'react-paginate';
 import { Row, Col } from 'react-bootstrap';
 import styles from './Profile.module.css';
 import {UserContext} from '../../helpers/UserContext';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
 
 const Profile = props => {
@@ -128,7 +130,7 @@ const Profile = props => {
           {/* {myRecipes} */}
            
          
-        {currentPageRecipes}
+        {currentPageRecipes.length === 0 ? <Loader className="recipes-loader" type="Bars" color="#242582" height={80} width={80} /> : currentPageRecipes}
         <ReactPaginate
         previousLabel={"←"}
         nextLabel={"→"}
