@@ -4,7 +4,7 @@ import { signUp } from './auth';
 
 import styles from './Register.module.css';
 
-import { Form, Container, Button } from 'react-bootstrap';
+import { Form, Container, Button, Alert } from 'react-bootstrap';
 
 const Register = props => {
     const [error, setError] = useState(null);
@@ -23,6 +23,10 @@ const Register = props => {
      const handleSubmit = async (event) => {
         event.preventDefault();  
         setError('')
+        if(password !== rePassword){
+          setError('Two passwords must match');
+          return;
+        }
         try {
           await signUp(email, password);
         } catch (error) {
@@ -52,10 +56,13 @@ const Register = props => {
     <Form.Label>Потвърди парола</Form.Label>
       <Form.Control placeholder="Потвърди парола..." name="rePassword" type="password" onChange={handleRePassword} value={rePassword} />
     </Form.Group>
-          <div>
-            {error ? <p>{error}</p> : null}
+           
+            
             <Button type="submit">Регистрация</Button>
-          </div>
+            {error 
+      ?  <Alert variant="danger mt-2">{error}</Alert>
+      : null
+}
           <hr></hr>
           <Form.Text className="font-weight-bold">
           Имате създаден акаунт? <Link to="/login">Вход</Link>
