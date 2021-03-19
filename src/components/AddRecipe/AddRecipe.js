@@ -6,10 +6,16 @@ import { useHistory } from 'react-router-dom';
 
 import styles from './AddRecipe.module.css';
 
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice } from '@fortawesome/free-solid-svg-icons'
+
+import validateAddRecipes from '../../helpers/validateAddRecipes';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const nameIcon = <FontAwesomeIcon icon={faBreadSlice} />;
 const imageIcon = <FontAwesomeIcon icon={faImage} />;
@@ -17,11 +23,13 @@ const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />;
 const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />;
 const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />;
 
+
+
 const AddRecipe = ({ logout, authenticated }) => {
   
   const [user, setUser] = useState(auth().currentUser);
 
-   const [writeError, setWriteError] = useState(null);
+   const [writeError, setWriteError] = useState({});
    const [name, setName] = useState('');
    const [image, setImage] = useState('');
    const [prepareTime, setPrepareTime] = useState(0);
@@ -33,6 +41,14 @@ const AddRecipe = ({ logout, authenticated }) => {
    const submitValue = async (event) => {
      let isSubscribed = true;
      event.preventDefault();
+     let error = await validateAddRecipes(name,image,prepareTime,portions,description);
+    
+      setWriteError(error);
+    
+     
+     if(Object.keys(error).length !== 0){
+        return;
+     }
     const inputResult = {
         'name' : name,
         'image' : image,
@@ -40,9 +56,9 @@ const AddRecipe = ({ logout, authenticated }) => {
         'portions' : portions,
         'description': description
     }
-    if(isSubscribed){
-    setWriteError(null);
-    }
+   //  if(isSubscribed){
+   //  setWriteError(null);
+   //  }
     try {
     
       await db.ref("recipes").push({
@@ -64,39 +80,57 @@ const AddRecipe = ({ logout, authenticated }) => {
    isSubscribed = false;
 }
 
+   
+    
+ 
+
     return (
       <Container className='col-md-6 mt-3'>
       <Form onSubmit={submitValue} className={styles.bdForm}>
         <Form.Group controlId="name">
         <Form.Label>{nameIcon} Име</Form.Label>
-           <Form.Control placeholder="Въведи име..." name="name" type="text" onChange={e => setName(e.target.value)} value={name} />
-           <Form.Text className="text-muted">
-                 Кратко име на рецептата
-            </Form.Text>
+           <Form.Control isInvalid={writeError.name !== undefined} placeholder="Въведи име..." name="name" type="text" onChange={e => setName(e.target.value)} value={name} />
+         
+            {writeError.name !== undefined ? writeError.name.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
         
         <Form.Group controlId="image">
         <Form.Label>{imageIcon} Снимка</Form.Label>
-           <Form.Control placeholder="Въведи снимка..." name="image" type="text" onChange={e => setImage(e.target.value)} value={image} />
+           <Form.Control isInvalid={writeError.image !== undefined} placeholder="Въведи снимка..." name="image" type="text" onChange={e => setImage(e.target.value)} value={image} />
+           {writeError.image !== undefined ? writeError.image.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
         <Form.Group controlId="prepareTime">
         <Form.Label>{prepareTimeIcon} Време за приготвяне</Form.Label>
-           <Form.Control placeholder="Време за приготвяне..." name="prepareTime" type="number" onChange={e => setPrepareTime(e.target.value)} value={prepareTime} />
+           <Form.Control isInvalid={writeError.prepareTime !== undefined} placeholder="Време за приготвяне..." name="prepareTime" type="number" onChange={e => setPrepareTime(e.target.value)} value={prepareTime} />
+           {writeError.prepareTime !== undefined ? writeError.prepareTime.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
         <Form.Group controlId="portions">
         <Form.Label>{portionsIcon} Порции</Form.Label>
-           <Form.Control placeholder="Въведи порции..." name="portions" type="number" onChange={e => setPortions(e.target.value)} value={portions} />
+           <Form.Control isInvalid={writeError.portions !== undefined} placeholder="Въведи порции..." name="portions" type="number" onChange={e => setPortions(e.target.value)} value={portions} />
+           {writeError.portions !== undefined ? writeError.portions.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
           
         <Form.Group controlId="description">
         <Form.Label>{howToCookIcon} Описание</Form.Label>
-           <Form.Control placeholder="Въведи описание..." name="description" type="text" onChange={e => setDescription(e.target.value)} value={description} />
+           <Form.Control isInvalid={writeError.description !== undefined}  placeholder="Въведи описание..." name="description" type="text" onChange={e => setDescription(e.target.value)} value={description} />
+           {writeError.description !== undefined ? writeError.description.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
         
-          
-         {writeError ? <p>{writeError}</p> : null}
+         <ToastContainer
+            position="top-center"
+            autoClose={10000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
+            {/* Same as */}
+         
          <Button variant="primary" type="submit">
              Добави рецептата
           </Button>
