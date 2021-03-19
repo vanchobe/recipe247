@@ -2,7 +2,7 @@ import React, { Component, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {Nav, Navbar, NavDropdown, Form, FormControl, Button} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUtensils, faHome, faBreadSlice, faUserPlus, faUserTie, faSignInAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUtensils, faHome, faBreadSlice, faUserPlus, faUserTie, faSignInAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 import styles from './Header.module.css';
 import { auth } from '../../services/firebase';
 import {UserContext} from '../../helpers/UserContext';
@@ -13,6 +13,7 @@ const breadIcon = <FontAwesomeIcon className={styles.faUtensils} icon={faBreadSl
 const userPlusIcon = <FontAwesomeIcon icon={faUserPlus} />
 const loginIcon = <FontAwesomeIcon icon={faSignInAlt} />
 const userTie = <FontAwesomeIcon icon={faUserTie} />
+const searchIcon = <FontAwesomeIcon icon={faSearch} />
 
 
 
@@ -38,6 +39,7 @@ const Header = props =>    {
       <Nav.Link as={Link} to="/register">{userPlusIcon} Регистрация</Nav.Link>
       </Nav>;
     const helloMessage = user ? <Nav.Link as={Link} to={`/profile/${user.uid}`}>{userTie} {user ? user.email : ''}</Nav.Link> : '';
+    const searchLink = user ? <Nav.Link as={Link} to={`/search`}>{searchIcon} Търси рецепти</Nav.Link> : '';
       return  (
         <Navbar className="custom-navbar" expand="lg">
         <Navbar.Brand as={Link}  to="/">{utensils} <span className={styles.recipesLogo}>Recipes</span> <span className={styles.recipes247}>247</span></Navbar.Brand>
@@ -50,12 +52,9 @@ const Header = props =>    {
               {isAuth}
            
             {helloMessage}
+            {searchLink}
           </Nav>
            
-          <Form inline>
-            <FormControl type="text" placeholder="Търси рецепта..." className="mr-sm-2" />
-            <Button variant="primary">Търси</Button>
-          </Form>
         </Navbar.Collapse>
       </Navbar>
       )

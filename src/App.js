@@ -27,6 +27,7 @@ import Profile from './components/Profile/Profile';
 import UserProfile from './components/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SearchRecipes from './components/SearchRecipes';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
@@ -76,6 +77,7 @@ function App() {
         <PrivateRoute path="/preview-recipe/:recipeId" authenticated={authenticated}  component={RecipeDetails} ></PrivateRoute>
         <PrivateRoute path="/edit-recipe/:recipeId" authenticated={authenticated}  component={EditRecipe} ></PrivateRoute>
         <PrivateRoute path="/profile/:userId" authenticated={authenticated} user={user}  component={Profile} ></PrivateRoute>
+        <PrivateRoute path="/search" authenticated={authenticated} user={user}  component={SearchRecipes} ></PrivateRoute>
         <Route path="/user-profile/:userId" authenticated={authenticated}  component={UserProfile} ></Route>
         
       </Switch>
