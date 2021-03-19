@@ -13,9 +13,6 @@ import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice } fro
 
 import validateAddRecipes from '../../helpers/validateAddRecipes';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const nameIcon = <FontAwesomeIcon icon={faBreadSlice} />;
 const imageIcon = <FontAwesomeIcon icon={faImage} />;
@@ -118,18 +115,7 @@ const AddRecipe = ({ logout, authenticated }) => {
            {writeError.description !== undefined ? writeError.description.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
         
-         <ToastContainer
-            position="top-center"
-            autoClose={10000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            />
-            {/* Same as */}
+
          
          <Button variant="primary" type="submit">
              Добави рецептата

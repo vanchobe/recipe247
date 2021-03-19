@@ -2,14 +2,16 @@ import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
 import styles from './EditRecipe.module.css';
+
+import validateAddRecipes from '../../helpers/validateAddRecipes';
 
 
 const EditRecipe = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
-    const [writeError, setWriteError] = useState(null);
+    const [writeError, setWriteError] = useState({});
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [prepareTime, setPrepareTime] = useState(0);
@@ -22,6 +24,14 @@ const EditRecipe = props => {
     const { recipeId } = useParams();
     const submitValue = async (event) => {
         event.preventDefault();
+        let error = await validateAddRecipes(name,image,prepareTime,portions,description);
+    
+        setWriteError(error);
+      
+       
+       if(Object.keys(error).length !== 0){
+          return;
+       }
        const inputResult = {
            'name' : name,
            'image' : image,
@@ -30,7 +40,7 @@ const EditRecipe = props => {
            'description': description
        }
        
-       setWriteError(null);
+       
        try {
          await db.ref('recipes/' + recipeId).update({
            ...inputResult
@@ -47,7 +57,7 @@ const EditRecipe = props => {
 
       useEffect(() => {
         let isSubscribed = true;
-        setWriteError(null)
+        
         try { 
         db.ref("recipes").on("value", snapshot => {
             let recipes = [];
@@ -81,31 +91,36 @@ const EditRecipe = props => {
         <Form className={styles.bdForm} onSubmit={submitValue}>
         <Form.Group controlId="name">
         <Form.Label>Име</Form.Label>
-        <Form.Control placeholder="Name" name="name" type="text" onChange={e => setName(e.target.value)} value={name} />
+        <Form.Control isInvalid={writeError.name !== undefined} placeholder="Въведи име..." name="name" type="text" onChange={e => setName(e.target.value)} value={name} />
+        {writeError.name !== undefined ? writeError.name.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
         <Form.Group controlId="image">
         <Form.Label>Снимка</Form.Label>
-        <Form.Control placeholder="Image" name="image" type="text" onChange={e => setImage(e.target.value)} value={image} />
+        <Form.Control isInvalid={writeError.image !== undefined} placeholder="Въведи снимка..." name="image" type="text" onChange={e => setImage(e.target.value)} value={image} />
+        {writeError.image !== undefined ? writeError.image.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
         <Form.Group controlId="prepareTime">
         <Form.Label>Време за приготвяне</Form.Label>
-        <Form.Control placeholder="Prepare time" name="prepareTime" type="number" onChange={e => setPrepareTime(e.target.value)} value={prepareTime} />
+        <Form.Control isInvalid={writeError.prepareTime !== undefined} placeholder="Време за приготвяне..." name="prepareTime" type="number" onChange={e => setPrepareTime(e.target.value)} value={prepareTime} />
+        {writeError.prepareTime !== undefined ? writeError.prepareTime.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
         <Form.Group controlId="portions">
         <Form.Label>Порции</Form.Label>
-        <Form.Control placeholder="Portions" name="portions" type="number" onChange={e => setPortions(e.target.value)} value={portions} />
+        <Form.Control isInvalid={writeError.portions !== undefined} placeholder="Въведи порции..." name="portions" type="number" onChange={e => setPortions(e.target.value)} value={portions} />
+        {writeError.portions !== undefined ? writeError.portions.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
  
         <Form.Group controlId="description">
         <Form.Label>Описание</Form.Label>
-        <Form.Control placeholder="Description" name="description" type="text" onChange={e => setDescription(e.target.value)} value={description} />
+        <Form.Control isInvalid={writeError.description !== undefined} placeholder="Въведи описание..." name="description" type="text" onChange={e => setDescription(e.target.value)} value={description} />
+        {writeError.description !== undefined ? writeError.description.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
  
  
  
-{writeError ? <p>{writeError}</p> : null}
+{/* {writeError ? <p>{writeError}</p> : null} */}
 <Button type="submit">Изпрати</Button>
 </Form>
 </Container>
