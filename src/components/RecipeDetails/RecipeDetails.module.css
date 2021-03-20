@@ -22,3 +22,9 @@
 .recipeNameIcon {
     font-size: 1em;
 }
+.creatorName {
+    color: #242582;
+}
+.creatorName:hover {
+    color: #e27d60;
+}
