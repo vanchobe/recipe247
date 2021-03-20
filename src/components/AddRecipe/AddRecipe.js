@@ -44,7 +44,7 @@ const AddRecipe = ({ logout, authenticated }) => {
     
       setWriteError(error);
     
-     console.log(category);
+
      if(Object.keys(error).length !== 0){
         return;
      }
