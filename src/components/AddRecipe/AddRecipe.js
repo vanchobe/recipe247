@@ -9,7 +9,7 @@ import styles from './AddRecipe.module.css';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice } from '@fortawesome/free-solid-svg-icons'
+import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
 import validateAddRecipes from '../../helpers/validateAddRecipes';
 
@@ -19,6 +19,7 @@ const imageIcon = <FontAwesomeIcon icon={faImage} />;
 const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />;
 const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />;
 const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />;
+const categoryIcon = <FontAwesomeIcon icon={faFolderOpen} />;
 
 
 
@@ -28,6 +29,7 @@ const AddRecipe = ({ logout, authenticated }) => {
 
    const [writeError, setWriteError] = useState({});
    const [name, setName] = useState('');
+   const [category, setCategory] = useState('');
    const [image, setImage] = useState('');
    const [prepareTime, setPrepareTime] = useState(0);
    const [portions, setPortions] = useState(1);
@@ -42,17 +44,19 @@ const AddRecipe = ({ logout, authenticated }) => {
     
       setWriteError(error);
     
-     
+     console.log(category);
      if(Object.keys(error).length !== 0){
         return;
      }
     const inputResult = {
         'name' : name,
+        'category' : category,
         'image' : image,
         'prepareTime' : prepareTime,
         'portions' : portions,
         'description': description
     }
+     
    //  if(isSubscribed){
    //  setWriteError(null);
    //  }
@@ -90,6 +94,16 @@ const AddRecipe = ({ logout, authenticated }) => {
          
             {writeError.name !== undefined ? writeError.name.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
+
+        <Form.Group controlId="category">
+       <Form.Label>{categoryIcon} Категория</Form.Label>
+         <Form.Control as="select" onChange={e => setCategory(e.target.value)} custom>
+            <option defaultValue>Избери категория...</option>  
+            <option value="cakes">Торти</option>
+            <option value="sweets">Сладкиши</option>
+            <option value="sweetsbiscuits">Сладки и Бисквити</option>
+         </Form.Control>
+         </Form.Group>
         
         <Form.Group controlId="image">
         <Form.Label>{imageIcon} Снимка</Form.Label>
