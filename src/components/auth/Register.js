@@ -38,7 +38,7 @@ const Register = props => {
       <Container className='col-md-6 mt-3'>
              <Form onSubmit={handleSubmit}  className={styles.bdForm}>
              <h2>
-            Регистрация в <Link to="/">
+            Регистрация в <Link className={styles.registerTitle} to="/">
               Recipes 247
             </Link>
           </h2>
@@ -65,7 +65,7 @@ const Register = props => {
 }
           <hr></hr>
           <Form.Text className="font-weight-bold">
-          Имате създаден акаунт? <Link to="/login">Вход</Link>
+          Имате създаден акаунт? <Link className={styles.registerTitle} to="/login">Вход</Link>
           </Form.Text>
         </Form>
         </Container>

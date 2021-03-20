@@ -36,7 +36,7 @@ const Login = props => {
           className={styles.bdForm}
         >
           <h1>
-            Вход в <Link to="/">
+            Вход в <Link className={styles.loginTitle} to="/">
               Recipes 247
             </Link>
           </h1>
@@ -72,7 +72,7 @@ const Login = props => {
           <hr />
          
           <Form.Text className="font-weight-bold">
-          Нямате акаунт? <Link to="/register">Регистрация</Link>
+          Нямате акаунт? <Link className={styles.loginTitle} to="/register">Регистрация</Link>
           </Form.Text>
         </Form>
         </Container>
