@@ -1,7 +1,7 @@
 import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
-import { useParams, useHistory, Redirect } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import styles from './EditRecipe.module.css';
 
@@ -17,11 +17,8 @@ const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />;
 const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />;
 const categoryIcon = <FontAwesomeIcon icon={faFolderOpen} />;
 
-
-
 const EditRecipe = props => {
     const [user, setUser] = useState(auth().currentUser);
-    const [recipes, setRecipes] = useState([]);
     const [writeError, setWriteError] = useState({});
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
@@ -30,17 +27,13 @@ const EditRecipe = props => {
     const [portions, setPortions] = useState(1);
     const [description, setDescription] = useState('');
     const [creatorId, setCreatorId] = useState('');
- 
- 
+
     const history = useHistory();
     const { recipeId } = useParams();
     const submitValue = async (event) => {
         event.preventDefault();
         let error = await validateAddRecipes(name,image,prepareTime,portions,description,category);
-    
         setWriteError(error);
-      
-       
        if(Object.keys(error).length !== 0){
           return;
        }
@@ -52,25 +45,19 @@ const EditRecipe = props => {
            'portions' : portions,
            'description': description
        }
-       
-       
        try {
          await db.ref('recipes/' + recipeId).update({
            ...inputResult
          });
         history.push(`/preview-recipe/${recipeId}`);
-         
        } catch (error) {
         setWriteError(error.message);
         console.log(writeError);
        }
-       
    }
-     
 
       useEffect(() => {
         let isSubscribed = true;
-        
         try { 
         db.ref("recipes").on("value", snapshot => {
             let recipes = [];
@@ -80,9 +67,7 @@ const EditRecipe = props => {
               recipes.push(snap.val())
             }
             });
-           
            if(isSubscribed && recipes.length > 0){
-
             setName(recipes[0].name);
             setCategory(recipes[0].category);
             setImage(recipes[0].image);
@@ -91,7 +76,6 @@ const EditRecipe = props => {
             setDescription(recipes[0].description);
             setCreatorId(recipes[0].uid);
            }
-
           });
         } catch (error) {
           setWriteError(error.message);
@@ -104,7 +88,6 @@ const EditRecipe = props => {
         sweets: 'sweets',
         sweetsbiscuits: 'sweetsbiscuits',
         '': ''
-        
       }
     return (
         user.uid !== creatorId ? <h2>You don't own this recipe! and can't edit</h2> :  
@@ -126,7 +109,6 @@ const EditRecipe = props => {
          </Form.Control>
          {writeError.category !== undefined ? writeError.category.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
          </Form.Group>
-
 
         <Form.Group controlId="image">
         <Form.Label>{imageIcon} Снимка</Form.Label>
@@ -151,14 +133,11 @@ const EditRecipe = props => {
         <Form.Control isInvalid={writeError.description !== undefined} placeholder="Въведи описание..." name="description" type="text" onChange={e => setDescription(e.target.value)} value={description} />
         {writeError.description !== undefined ? writeError.description.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
- 
- 
- 
-{/* {writeError ? <p>{writeError}</p> : null} */}
+
 <Button type="submit">Изпрати</Button>
 </Form>
 </Container>
-     )
+)
 }
 
 export default EditRecipe
