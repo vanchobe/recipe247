@@ -5,7 +5,18 @@ import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import styles from './EditRecipe.module.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+
 import validateAddRecipes from '../../helpers/validateAddRecipes';
+
+const nameIcon = <FontAwesomeIcon icon={faBreadSlice} />;
+const imageIcon = <FontAwesomeIcon icon={faImage} />;
+const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />;
+const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />;
+const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />;
+const categoryIcon = <FontAwesomeIcon icon={faFolderOpen} />;
+
 
 
 const EditRecipe = props => {
@@ -13,6 +24,7 @@ const EditRecipe = props => {
     const [recipes, setRecipes] = useState([]);
     const [writeError, setWriteError] = useState({});
     const [name, setName] = useState('');
+    const [category, setCategory] = useState('');
     const [image, setImage] = useState('');
     const [prepareTime, setPrepareTime] = useState(0);
     const [portions, setPortions] = useState(1);
@@ -34,6 +46,7 @@ const EditRecipe = props => {
        }
        const inputResult = {
            'name' : name,
+           'category' : category,
            'image' : image,
            'prepareTime' : prepareTime,
            'portions' : portions,
@@ -71,6 +84,7 @@ const EditRecipe = props => {
            if(isSubscribed && recipes.length > 0){
 
             setName(recipes[0].name);
+            // setCategory(recipes[0].category);
             setImage(recipes[0].image);
             setPrepareTime(recipes[0].prepareTime);
             setPortions(recipes[0].portions);
@@ -90,30 +104,42 @@ const EditRecipe = props => {
            <Container className='col-md-6 mt-3'>
         <Form className={styles.bdForm} onSubmit={submitValue}>
         <Form.Group controlId="name">
-        <Form.Label>Име</Form.Label>
+        <Form.Label>{nameIcon} Име</Form.Label>
         <Form.Control isInvalid={writeError.name !== undefined} placeholder="Въведи име..." name="name" type="text" onChange={e => setName(e.target.value)} value={name} />
         {writeError.name !== undefined ? writeError.name.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
+
+        <Form.Group controlId="category">
+       <Form.Label>{categoryIcon} Категория</Form.Label>
+         <Form.Control as="select" onChange={e => setCategory(e.target.value)} custom>
+            <option defaultValue>Избери категория...</option>  
+            <option value="cakes">Торти</option>
+            <option value="sweets">Сладкиши</option>
+            <option value="sweetsbiscuits">Сладки и Бисквити</option>
+         </Form.Control>
+         </Form.Group>
+
+
         <Form.Group controlId="image">
-        <Form.Label>Снимка</Form.Label>
+        <Form.Label>{imageIcon} Снимка</Form.Label>
         <Form.Control isInvalid={writeError.image !== undefined} placeholder="Въведи снимка..." name="image" type="text" onChange={e => setImage(e.target.value)} value={image} />
         {writeError.image !== undefined ? writeError.image.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
         <Form.Group controlId="prepareTime">
-        <Form.Label>Време за приготвяне</Form.Label>
+        <Form.Label>{prepareTimeIcon} Време за приготвяне</Form.Label>
         <Form.Control isInvalid={writeError.prepareTime !== undefined} placeholder="Време за приготвяне..." name="prepareTime" type="number" onChange={e => setPrepareTime(e.target.value)} value={prepareTime} />
         {writeError.prepareTime !== undefined ? writeError.prepareTime.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
         <Form.Group controlId="portions">
-        <Form.Label>Порции</Form.Label>
+        <Form.Label>{portionsIcon} Порции</Form.Label>
         <Form.Control isInvalid={writeError.portions !== undefined} placeholder="Въведи порции..." name="portions" type="number" onChange={e => setPortions(e.target.value)} value={portions} />
         {writeError.portions !== undefined ? writeError.portions.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
  
         <Form.Group controlId="description">
-        <Form.Label>Описание</Form.Label>
+        <Form.Label>{howToCookIcon} Описание</Form.Label>
         <Form.Control isInvalid={writeError.description !== undefined} placeholder="Въведи описание..." name="description" type="text" onChange={e => setDescription(e.target.value)} value={description} />
         {writeError.description !== undefined ? writeError.description.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
