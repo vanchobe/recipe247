@@ -1,5 +1,4 @@
 import style from './SearchRecipes.module.css';
-import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
@@ -7,7 +6,6 @@ import ReactPaginate from 'react-paginate';
 import { Row, Col } from 'react-bootstrap'; 
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
-import { useParams } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 
 const SearchRecipes = props => {
@@ -16,13 +14,6 @@ const SearchRecipes = props => {
     const [currentPage, setCurrentPage] = useState(0);
     const [keyword, setKeyWord] = useState('');
     const [filteredRecipes, setFilteredRecipes] = useState([]);
-
-    
-
-     
-
-  
-    
 
     const loadRecipes = (isSubscribed) => {
       try {
@@ -85,13 +76,8 @@ const SearchRecipes = props => {
                   </Col>
                 ))}
               </Row>
-            ))
-          
-         
-           
-     
-        
-           ;
+            ));
+            
       const pageCount = Math.ceil(filteredRecipes.length / PER_PAGE);
       function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
@@ -119,11 +105,9 @@ const SearchRecipes = props => {
     
   return () => (isSubscribed = false)
      }
-   
-    
+
     return (
-        <div>
-            
+        <div> 
            <div className={style.recipesContainer}>
            <SearchBar keyword={keyword} setKeyword={updateKeyword} className='mt-3 d-flex ' />
            <ReactPaginate
