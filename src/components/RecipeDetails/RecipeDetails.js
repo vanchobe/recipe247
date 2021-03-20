@@ -87,7 +87,7 @@ const Recipes = props => {
             </Col> : ''}
               </Row>
               <Card.Footer>
-              <p>Добавена от: {user.uid === creatorId ? <Link to={`/profile/${recipe.uid}`}>{userIcon} {recipe.creatorEmail}</Link> : <Link to={`/user-profile/${recipe.uid}`}>{recipe.creatorEmail}</Link>}</p>
+              <p>Добавена от: {user.uid === creatorId ? <Link className={styles.creatorName} to={`/profile/${recipe.uid}`}>{userIcon} {recipe.creatorEmail}</Link> : <Link className={styles.creatorName} to={`/user-profile/${recipe.uid}`}>{recipe.creatorEmail}</Link>}</p>
               </Card.Footer>
               </Card.Body>
           </Card>
