@@ -1,5 +1,4 @@
 import style from './Recipes.module.css';
-import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
@@ -16,17 +15,11 @@ const allIcon = <FontAwesomeIcon icon={faUtensils} />;
 const cakeIcon = <FontAwesomeIcon icon={faBirthdayCake} />;
 const cookieIcon = <FontAwesomeIcon icon={faCookie} />;
 const waffelIcon = <FontAwesomeIcon icon={faStroopwafel} />;
- 
- 
- 
-
 
 const Recipes = props => {
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
-    const [selectedCategory, setSelectedCategory] = useState('all');
-
 
     const loadRecipes = (isSubscribed, type) => {
       try {
@@ -75,7 +68,6 @@ const Recipes = props => {
         if(isSubscribed){
         setReadError(null)
         }
-        
         loadRecipes(isSubscribed, 'all');
         return () => (isSubscribed = false)
       }, []);
@@ -110,20 +102,12 @@ const Recipes = props => {
                   </Col>
                 ))}
               </Row>
-            ))
-          
-         
-           
-     
-        
-           ;
+            ));
       const pageCount = Math.ceil(recipes.length / PER_PAGE);
       function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
     }
 
- 
-    
     return (
         <div>
            <div className={style.recipesContainer}>
@@ -147,9 +131,8 @@ const Recipes = props => {
         breakLabel={3}
       />
         {(currentPageRecipes.length > 0) ? currentPageRecipes : 
-        <Loader className="recipes-loader" type="Bars" color="#242582" height={80} width={80} />
-         
-      }
+        <Loader className="recipes-loader" type="Bars" color="#242582" height={80} width={80} /> 
+        }
       </div>
         </div>
     )
