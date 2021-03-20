@@ -1,7 +1,5 @@
 import './App.css';
 
-import { createContext } from 'react';
-
 import { useState, useEffect  } from 'react';
 import { Container } from 'react-bootstrap';
 
@@ -9,11 +7,9 @@ import {
   Route,
   BrowserRouter as Router,
   Switch,
-  useHistory,
   Redirect
 } from "react-router-dom";
 import { auth } from './services/firebase';
-
 import PrivateRoute from './helpers/PrivateRoute';
 import PublicRoute from './helpers/PublicRoute';
 import Home from './components/Home';
@@ -30,17 +26,12 @@ import Footer from './components/Footer';
 import SearchRecipes from './components/SearchRecipes';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
-
 import { UserContext } from './helpers/UserContext';
-
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(auth().currentUser);
-
-  
-   
 
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
@@ -79,13 +70,11 @@ function App() {
         <PrivateRoute path="/profile/:userId" authenticated={authenticated} user={user}  component={Profile} ></PrivateRoute>
         <PrivateRoute path="/search" authenticated={authenticated} user={user}  component={SearchRecipes} ></PrivateRoute>
         <Route path="/user-profile/:userId" authenticated={authenticated}  component={UserProfile} ></Route>
-        
       </Switch>
       </Container>
       <Footer />
     </Router>
     </UserContext.Provider>
-    
   );
 }
 
