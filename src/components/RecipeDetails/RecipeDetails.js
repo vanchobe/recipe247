@@ -6,7 +6,7 @@ import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import styles from './RecipeDetails.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock, faFileSignature, faGripHorizontal, faUser, faEdit, faTrash  } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faFileSignature, faGripHorizontal, faUser, faEdit, faTrash, faFolderOpen  } from '@fortawesome/free-solid-svg-icons'
 
 const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />
 const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />
@@ -14,6 +14,8 @@ const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />
 const userIcon = <FontAwesomeIcon icon={faUser} />
 const editIcon = <FontAwesomeIcon icon={faEdit} />
 const deleteIcon = <FontAwesomeIcon icon={faTrash} />
+const categoryIcon = <FontAwesomeIcon icon={faFolderOpen} />;
+
 
 
 
@@ -62,7 +64,11 @@ const Recipes = props => {
         })
         .catch((error)=>{ setReadError(error.message)})
     }
-
+    const showCategory = {
+      sweets: 'Сладкиши',
+      cakes: 'Торти',
+      sweetsbiscuits: 'Сладки и Бисквити'
+    }
     return (
         
            <Container className="mt-2 d-flex justify-content-center">
@@ -71,7 +77,7 @@ const Recipes = props => {
               <Card.Img variant="top" src={recipe.image} />  
               <Card.Body className={styles.imageOverlay}>
               <Card.Title>Рецепта: {recipe.name}</Card.Title>
-          
+              <Card.Text>{categoryIcon} Категория: {showCategory[recipe.category]}</Card.Text>
               <Card.Text>{prepareTimeIcon} {recipe.prepareTime} минути</Card.Text>
               <Card.Text>{portionsIcon} {recipe.portions} {recipe.portions > 1 ? 'порции' : 'порция'}</Card.Text>
               <Card.Text>{howToCookIcon} {recipe.description}</Card.Text>
