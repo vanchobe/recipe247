@@ -1,4 +1,3 @@
-import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
@@ -8,16 +7,13 @@ import { Row, Col } from 'react-bootstrap';
 import styles from './UserProfile.module.css';
 
 const Profile = props => {
-    const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
 
     const locationUrl = useLocation().pathname;
     const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 14);
-    
-
- 
+  
     const loadRecipes = (isSubscribed) => {
       if(isSubscribed){
         setReadError(null)
@@ -45,11 +41,9 @@ const Profile = props => {
       }
     }
 
-
       useEffect(() => {
         let isSubscribed = true;
         loadRecipes(isSubscribed)
-        
         return () => (isSubscribed = false)
       }, []);
       
@@ -57,9 +51,6 @@ const Profile = props => {
       if(recipes.length > 0 && recipes[0].creatorEmail){
         creatorEmail = recipes[0].creatorEmail
       }
-       
-      let myRecipes = currentUserProfileId === user.uid ? <h1>Моите рецепти</h1> : <h1>Рецептите на {creatorEmail}</h1>
-     
 
       const PER_PAGE = 4;
       const COLS_PER_ROW = 4;
@@ -109,8 +100,7 @@ const Profile = props => {
                   <h4 className={styles.title}>Добавени рецепти: {recipes.length}</h4>
                 </div>
               </div>
-            </div>
-                
+            </div>    
         </div>
         </div>)
     return  recipes.length === 0 ? <p>Този потребител няма добавени рецепти още! <Link to='/add-recipe'>Добави рецепта</Link></p> : 
@@ -119,13 +109,9 @@ const Profile = props => {
           <Row> 
             <Col md='3'>
           {myProfileBadge}
-            
             </Col>
             <Col  md='9'>
-              
-          {/* {myRecipes} */}
-           
-         
+            
         {currentPageRecipes}
         <ReactPaginate
         previousLabel={"←"}
@@ -142,7 +128,6 @@ const Profile = props => {
       />
         </Col>
         </Row> 
-       
         </div>
     )
 }
