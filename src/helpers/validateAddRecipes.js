@@ -1,4 +1,4 @@
-function validateAddRecipes (name,image,prepareTime,portions,description){
+function validateAddRecipes (name,image,prepareTime,portions,description, category){
     let result = [];
 
     //name validations
@@ -51,6 +51,15 @@ function validateAddRecipes (name,image,prepareTime,portions,description){
             result.description.push('Описанието не може да бъде празно.');
         } else {
             result.description.push('Описанието не може да бъде празно.');
+        }
+    }
+
+    if(category === ''){
+        if(result.category === undefined){
+            result.category = [];
+            result.category.push('Моля, изберете категория');
+        } else {
+            result.category.push('Моля, изберете категория');
         }
     }
      

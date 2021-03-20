@@ -36,7 +36,7 @@ const EditRecipe = props => {
     const { recipeId } = useParams();
     const submitValue = async (event) => {
         event.preventDefault();
-        let error = await validateAddRecipes(name,image,prepareTime,portions,description);
+        let error = await validateAddRecipes(name,image,prepareTime,portions,description,category);
     
         setWriteError(error);
       
@@ -103,7 +103,7 @@ const EditRecipe = props => {
         cakes: 'cakes',
         sweets: 'sweets',
         sweetsbiscuits: 'sweetsbiscuits',
-        '': 1
+        '': ''
         
       }
     return (
@@ -119,11 +119,12 @@ const EditRecipe = props => {
         <Form.Group controlId="category">
        <Form.Label>{categoryIcon} Категория</Form.Label>
          <Form.Control defaultValue={selectedCategory[category]} as="select" onChange={e => setCategory(e.target.value)} custom>
-            <option>Избери категория...</option>  
+            <option value="">Избери категория...</option>  
             <option value="cakes">Торти</option>
             <option value="sweets">Сладкиши</option>
             <option value="sweetsbiscuits">Сладки и Бисквити</option>
          </Form.Control>
+         {writeError.category !== undefined ? writeError.category.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
          </Form.Group>
 
 
