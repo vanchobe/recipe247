@@ -84,7 +84,7 @@ const EditRecipe = props => {
            if(isSubscribed && recipes.length > 0){
 
             setName(recipes[0].name);
-            // setCategory(recipes[0].category);
+            setCategory(recipes[0].category);
             setImage(recipes[0].image);
             setPrepareTime(recipes[0].prepareTime);
             setPortions(recipes[0].portions);
@@ -98,7 +98,14 @@ const EditRecipe = props => {
         }
          return () => (isSubscribed = false)
       }, []);
-
+      
+      const selectedCategory = {
+        cakes: 'cakes',
+        sweets: 'sweets',
+        sweetsbiscuits: 'sweetsbiscuits',
+        '': 1
+        
+      }
     return (
         user.uid !== creatorId ? <h2>You don't own this recipe! and can't edit</h2> :  
            <Container className='col-md-6 mt-3'>
@@ -111,8 +118,8 @@ const EditRecipe = props => {
 
         <Form.Group controlId="category">
        <Form.Label>{categoryIcon} Категория</Form.Label>
-         <Form.Control as="select" onChange={e => setCategory(e.target.value)} custom>
-            <option defaultValue>Избери категория...</option>  
+         <Form.Control defaultValue={selectedCategory[category]} as="select" onChange={e => setCategory(e.target.value)} custom>
+            <option>Избери категория...</option>  
             <option value="cakes">Торти</option>
             <option value="sweets">Сладкиши</option>
             <option value="sweetsbiscuits">Сладки и Бисквити</option>
