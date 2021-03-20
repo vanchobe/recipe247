@@ -4,18 +4,34 @@ import { db } from "../../services/firebase"
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import ReactPaginate from 'react-paginate';
-import { Row, Col } from 'react-bootstrap'; 
+import { Row, Col, Button } from 'react-bootstrap'; 
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUtensils, faBirthdayCake, faCookie, faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+
+const allIcon = <FontAwesomeIcon icon={faUtensils} />;
+const cakeIcon = <FontAwesomeIcon icon={faBirthdayCake} />;
+const cookieIcon = <FontAwesomeIcon icon={faCookie} />;
+const waffelIcon = <FontAwesomeIcon icon={faStroopwafel} />;
+ 
+ 
+ 
+
 
 const Recipes = props => {
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
 
-    const loadRecipes = (isSubscribed) => {
+    const loadRecipes = (isSubscribed, type) => {
       try {
+        
+       if(type === 'all'){
         db.ref("recipes").on("value", snapshot => {
           let recipes = [];
           snapshot.forEach((snap) => {
@@ -29,6 +45,24 @@ const Recipes = props => {
           }
           
         });
+       } else {
+        db.ref("recipes")
+        .orderByChild('category')
+        .equalTo(`${type}`) 
+        .on("value", snapshot => {
+          let recipes = [];
+          snapshot.forEach((snap) => {
+          
+            let _id = snap.ref_.path.pieces_[1];
+            recipes.push({...snap.val(), _id});
+            
+          });
+          if(isSubscribed){
+          setRecipes( recipes.reverse() );
+          }
+          
+        });
+       }
       } catch (error) {
         if(isSubscribed){
         setReadError(error.message);
@@ -41,7 +75,8 @@ const Recipes = props => {
         if(isSubscribed){
         setReadError(null)
         }
-        loadRecipes(isSubscribed);
+        
+        loadRecipes(isSubscribed, 'all');
         return () => (isSubscribed = false)
       }, []);
 
@@ -86,10 +121,18 @@ const Recipes = props => {
       function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
     }
+
+ 
     
     return (
         <div>
            <div className={style.recipesContainer}>
+           <div className='mt-2 d-flex justify-content-center'>
+           <Button onClick={() => loadRecipes(true,'all')} className={style.categoryButton} variant="danger">{allIcon} Всички</Button>
+           <Button onClick={() => loadRecipes(true,'cakes')} className={style.categoryButton + ' ml-2'} variant="danger">{cakeIcon} Торти</Button>
+           <Button onClick={() => loadRecipes(true,'sweets')} className={style.categoryButton + ' ml-2'} variant="danger">{waffelIcon} Сладкиши</Button>
+           <Button onClick={() => loadRecipes(true,'sweetsbiscuits')} className={style.categoryButton + ' ml-2'} variant="danger">{cookieIcon} Сладки и Бисквити</Button>
+           </div>
            <ReactPaginate
         previousLabel={"←"}
         nextLabel={"→"}

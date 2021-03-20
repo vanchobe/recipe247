@@ -5,3 +5,18 @@
     font-size: 2rem;
     color: aqua;
 }
+.categoryButton {
+    background-color: #e8a87c;
+    border-color: #e8a87c;
+    color: #62350f;
+}
+.categoryButton:hover {
+    background-color: #242582;;
+    border-color: #242582;;
+    color: #FFFFFF;
+}
+.categoryButton:focus {
+    background-color: #242582;;
+    border-color: #242582;;
+    color: #FFFFFF;
+}

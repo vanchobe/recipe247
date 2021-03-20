@@ -92,7 +92,8 @@ code {
 .fa-clock,
 .fa-file-signature,
 .fa-bread-slice,
-.fa-image {
+.fa-image,
+.fa-folder-open {
   color: #242582;
   font-size: 1rem;
 }

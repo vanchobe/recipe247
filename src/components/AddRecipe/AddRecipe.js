@@ -40,7 +40,7 @@ const AddRecipe = ({ logout, authenticated }) => {
    const submitValue = async (event) => {
      let isSubscribed = true;
      event.preventDefault();
-     let error = await validateAddRecipes(name,image,prepareTime,portions,description);
+     let error = await validateAddRecipes(name,image,prepareTime,portions,description,category);
     
       setWriteError(error);
     
@@ -98,11 +98,12 @@ const AddRecipe = ({ logout, authenticated }) => {
         <Form.Group controlId="category">
        <Form.Label>{categoryIcon} Категория</Form.Label>
          <Form.Control as="select" onChange={e => setCategory(e.target.value)} custom>
-            <option defaultValue>Избери категория...</option>  
+            <option defaultValue value="">Избери категория...</option>  
             <option value="cakes">Торти</option>
             <option value="sweets">Сладкиши</option>
             <option value="sweetsbiscuits">Сладки и Бисквити</option>
          </Form.Control>
+         {writeError.category !== undefined ? writeError.category.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
          </Form.Group>
         
         <Form.Group controlId="image">
