@@ -2,3 +2,9 @@
     padding: 1.5rem;
     border: 1px solid #242582;
 }
+.registerTitle {
+    color: #242582;
+}
+.registerTitle:hover {
+    color: #e27d60;
+}
