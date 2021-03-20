@@ -1,10 +1,9 @@
-import React, { Component, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import {Nav, Navbar, NavDropdown, Form, FormControl, Button} from 'react-bootstrap'
+import {Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUtensils, faHome, faBreadSlice, faUserPlus, faUserTie, faSignInAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 import styles from './Header.module.css';
-import { auth } from '../../services/firebase';
 import {UserContext} from '../../helpers/UserContext';
 
 const utensils = <FontAwesomeIcon  className={styles.faUtensils}  icon={faUtensils} />
@@ -15,19 +14,10 @@ const loginIcon = <FontAwesomeIcon icon={faSignInAlt} />
 const userTie = <FontAwesomeIcon icon={faUserTie} />
 const searchIcon = <FontAwesomeIcon icon={faSearch} />
 
-
-
-
-
-
 const Header = props =>    {
-   
 
-   
-  const user = useContext(UserContext);
+      const user = useContext(UserContext);
  
-   
-    
       const isAuth = user ? <NavDropdown title="Профил" id="basic-nav-dropdown">
       <NavDropdown.Item as={Link} to={`/profile/${props.user ? props.user.uid : ''}`}>Мойте рецепти</NavDropdown.Item>
       <NavDropdown.Item as={Link} to='/add-recipe'>Добави Рецепта</NavDropdown.Item>
@@ -49,16 +39,13 @@ const Header = props =>    {
             <Nav.Link as={Link} to="/">{homeIcon} Начало</Nav.Link>
             <Nav.Link as={Link} to="/recipes">{breadIcon} Рецепти</Nav.Link>
             
-              {isAuth}
-           
+            {isAuth}
             {helloMessage}
             {searchLink}
-          </Nav>
-           
+          </Nav> 
         </Navbar.Collapse>
       </Navbar>
-      )
-    
+      ) 
   }
 
 export default Header;
