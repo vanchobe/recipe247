@@ -37,7 +37,7 @@ const Header = props =>    {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">{homeIcon} Начало</Nav.Link>
-            <Nav.Link as={Link} to="/recipes">{breadIcon} Рецепти</Nav.Link>
+            <Nav.Link as={Link} to="/recipes/all">{breadIcon} Рецепти</Nav.Link>
             
             {isAuth}
             {helloMessage}

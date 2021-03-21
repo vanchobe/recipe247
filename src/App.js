@@ -61,7 +61,7 @@ function App() {
       <Container fluid="md">
       <Switch>
         <Route exact path="/" component={Home}></Route>
-        <PrivateRoute path="/recipes" authenticated={authenticated} component={Recipes}></PrivateRoute>
+        <PrivateRoute path="/recipes/:categoryName" authenticated={authenticated} component={Recipes}></PrivateRoute>
         <PublicRoute path="/register" authenticated={authenticated} component={Register}></PublicRoute>
         <PublicRoute path="/login" authenticated={authenticated} component={Login}></PublicRoute>
         <PrivateRoute path="/add-recipe" authenticated={authenticated}  component={() => <AddRecipe logout={logout} />} ></PrivateRoute> 

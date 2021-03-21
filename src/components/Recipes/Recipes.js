@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { Row, Col, Button } from 'react-bootstrap'; 
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import { useParams, Link } from 'react-router-dom';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,11 +21,12 @@ const Recipes = props => {
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
-
+    
+    const { categoryName } = useParams();
+     
     const loadRecipes = (isSubscribed, type) => {
       try {
-        
-       if(type === 'all'){
+       if(categoryName === 'all'){
         db.ref("recipes").on("value", snapshot => {
           let recipes = [];
           snapshot.forEach((snap) => {
@@ -41,7 +43,7 @@ const Recipes = props => {
        } else {
         db.ref("recipes")
         .orderByChild('category')
-        .equalTo(`${type}`) 
+        .equalTo(`${categoryName}`) 
         .on("value", snapshot => {
           let recipes = [];
           snapshot.forEach((snap) => {
@@ -70,7 +72,7 @@ const Recipes = props => {
         }
         loadRecipes(isSubscribed, 'all');
         return () => (isSubscribed = false)
-      }, []);
+      }, [categoryName]);
 
       const PER_PAGE = 4;
       const COLS_PER_ROW = 4;
@@ -112,10 +114,10 @@ const Recipes = props => {
         <div>
            <div className={style.recipesContainer}>
            <div className='mt-2 d-flex justify-content-center'>
-           <Button onClick={() => loadRecipes(true,'all')} className={style.categoryButton} variant="danger">{allIcon} Всички</Button>
-           <Button onClick={() => loadRecipes(true,'cakes')} className={style.categoryButton + ' ml-2'} variant="danger">{cakeIcon} Торти</Button>
-           <Button onClick={() => loadRecipes(true,'sweets')} className={style.categoryButton + ' ml-2'} variant="danger">{waffelIcon} Сладкиши</Button>
-           <Button onClick={() => loadRecipes(true,'sweetsbiscuits')} className={style.categoryButton + ' ml-2'} variant="danger">{cookieIcon} Сладки и Бисквити</Button>
+           <Button as={Link} to='/recipes/all' className={style.categoryButton} variant="danger">{allIcon} Всички</Button>
+           <Button as={Link} to='/recipes/cakes' className={style.categoryButton + ' ml-2'} variant="danger">{cakeIcon} Торти</Button>
+           <Button as={Link} to='/recipes/sweets' className={style.categoryButton + ' ml-2'} variant="danger">{waffelIcon} Сладкиши</Button>
+           <Button as={Link} to='/recipes/sweetsbiscuits' className={style.categoryButton + ' ml-2'} variant="danger">{cookieIcon} Сладки и Бисквити</Button>
            </div>
            <ReactPaginate
         previousLabel={"←"}
