@@ -5,9 +5,14 @@ import { Link } from "react-router-dom";
 
 import { signIn } from './auth';
 
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
 
 import styles from './Login.module.css';
+
+const errorsType = {
+  'The password is invalid or the user does not have a password.': 'Паролата е невалидна или потребителя няма парола.',
+  'The email address is badly formatted.': 'Моля, въведете правилен имейл адрес.',
+}
 
 const Login = props => {
     const [error, setError] = useState(null);
@@ -63,7 +68,7 @@ const Login = props => {
           
           <div>
             {error ? (
-              <p>{error}</p>
+              <Alert variant="danger mt-2">{errorsType.hasOwnProperty(error) ? errorsType[error] : error}</Alert>
             ) : null}
             <Button variant="primary" type="submit">
             Вход
