@@ -28,7 +28,8 @@ const Register = props => {
           return;
         }
         try {
-          await signUp(email, password);
+          await signUp(email, password).then()
+          .catch(error => setError(error.message));
         } catch (error) {
           setError(error.message);
         }

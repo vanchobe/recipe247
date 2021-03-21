@@ -28,7 +28,8 @@ const Login = props => {
         event.preventDefault();  
         setError('')
         try {
-          await signIn(email, password);
+          await signIn(email, password).then()
+          .catch(error => setError(error.message));
         } catch (error) {
           setError(error.message);
         }
