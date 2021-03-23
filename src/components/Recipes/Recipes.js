@@ -37,6 +37,7 @@ const Recipes = props => {
           });
           if(isSubscribed){
           setRecipes( recipes.reverse() );
+          setCurrentPage(0);
           }
           
         });
@@ -54,6 +55,7 @@ const Recipes = props => {
           });
           if(isSubscribed){
           setRecipes( recipes.reverse() );
+          setCurrentPage(0);
           }
           
         });
