@@ -28,3 +28,29 @@
 .creatorName:hover {
     color: #e27d60;
 }
+.heartIcon {
+    color: #242582;
+}
+.heartLiked {
+    color:red;
+}
+.likeButton {
+
+}
+.likedButton {
+    color: #fff;
+    background-color: #e27d60;
+    border-color: #e27d60;
+}
+.likedButton:focus {
+    color: #fff;
+    background-color: #e27d60;
+    border-color: #e27d49;
+    box-shadow: 0 0 0 0.2rem rgb(38 143 255 / 50%);
+}
+.likedButton:disabled {
+    color: #fff;
+    background-color: #e27d60;
+    border-color: #e27d49;
+    
+}
