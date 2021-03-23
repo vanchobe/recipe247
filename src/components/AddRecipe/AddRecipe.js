@@ -54,7 +54,8 @@ const AddRecipe = ({ logout, authenticated }) => {
         'image' : image,
         'prepareTime' : prepareTime,
         'portions' : portions,
-        'description': description
+        'description': description,
+        'hearts': [user.uid]
     }
      
    //  if(isSubscribed){

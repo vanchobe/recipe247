@@ -6,7 +6,7 @@ import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import styles from './RecipeDetails.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock, faFileSignature, faGripHorizontal, faUser, faEdit, faTrash, faFolderOpen, faBreadSlice  } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faFileSignature, faGripHorizontal, faUser, faEdit, faTrash, faFolderOpen, faBreadSlice, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />
 const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />
@@ -16,12 +16,16 @@ const editIcon = <FontAwesomeIcon icon={faEdit} />
 const deleteIcon = <FontAwesomeIcon icon={faTrash} />
 const categoryIcon = <FontAwesomeIcon icon={faFolderOpen} />;
 const recipeNameIcon = <FontAwesomeIcon className={styles.recipeNameIcon} icon={faBreadSlice} />;
+const heartIcon = <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} />;
+const heartLikedIcon = <FontAwesomeIcon className={styles.heartLiked} icon={faHeart} />;
+
 
 const Recipes = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [creatorId, setCreatorId] = useState('');
+    const [isLiked, setIsLiked] = useState(false);
 
     const { recipeId } = useParams();
     
@@ -42,6 +46,7 @@ const Recipes = props => {
                 if(recipes.length > 0){
             setRecipes( recipes );
             setCreatorId(recipes[0].uid);
+            setIsLiked(recipes[0].hearts.find(x => x === user.uid))
                 }
             }
             
@@ -66,6 +71,26 @@ const Recipes = props => {
       cakes: 'Торти',
       sweetsbiscuits: 'Сладки и Бисквити'
     }
+    const likeHandler = async (event) => {
+      event.preventDefault();
+      let isSubscribed = true;
+      let hearts = recipes[0].hearts;
+      if(hearts.find(x => x === user.uid) !== user.uid){
+      hearts.push(user.uid);
+      }
+     const inputResult = {
+         'hearts': hearts,
+     }
+     try {
+       await db.ref('recipes/' + recipeId).update({
+         ...inputResult
+       });
+     } catch (error) {
+      
+     }
+ }
+ 
+     
     return (
            <Container className="mt-2 d-flex justify-content-center">
         {recipes.map((recipe, index) => {
@@ -73,6 +98,7 @@ const Recipes = props => {
               <Card.Img variant="top" src={recipe.image} />  
               <Card.Body className={styles.imageOverlay}>
               <Card.Title className={styles.recipeTitle}>{recipeNameIcon} {recipe.name}</Card.Title>
+              <Card.Text>{isLiked ? heartLikedIcon : heartIcon}  {recipe.hearts.length} {isLiked ? <Button className={styles.likedButton} disabled>Харесано</Button> : <Button className={styles.likeButton} onClick={likeHandler}>Харесай</Button>}</Card.Text>
               <Card.Text>{categoryIcon} Категория: {showCategory[recipe.category]}</Card.Text>
               <Card.Text>{prepareTimeIcon} {recipe.prepareTime} минути</Card.Text>
               <Card.Text>{portionsIcon} {recipe.portions} {recipe.portions > 1 ? 'порции' : 'порция'}</Card.Text>
