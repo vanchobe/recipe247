@@ -1,18 +1,11 @@
-import { useState } from 'react'
-
-import { auth, db } from '../../services/firebase'
-
+import { useState } from 'react';
+import { auth, db } from '../../services/firebase';
 import { useHistory } from 'react-router-dom';
-
 import styles from './AddRecipe.module.css';
-
 import { Container, Form, Button, Alert } from 'react-bootstrap';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage, faGripHorizontal, faClock, faFileSignature, faBreadSlice, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import validateAddRecipes from '../../helpers/validateAddRecipes';
-
 
 const nameIcon = <FontAwesomeIcon icon={faBreadSlice} />;
 const imageIcon = <FontAwesomeIcon icon={faImage} />;
@@ -20,8 +13,6 @@ const portionsIcon = <FontAwesomeIcon icon={faGripHorizontal} />;
 const prepareTimeIcon = <FontAwesomeIcon icon={faClock} />;
 const howToCookIcon = <FontAwesomeIcon icon={faFileSignature} />;
 const categoryIcon = <FontAwesomeIcon icon={faFolderOpen} />;
-
-
 
 const AddRecipe = ({ logout, authenticated }) => {
   
@@ -43,7 +34,6 @@ const AddRecipe = ({ logout, authenticated }) => {
      let error = await validateAddRecipes(name,image,prepareTime,portions,description,category);
     
       setWriteError(error);
-    
 
      if(Object.keys(error).length !== 0){
         return;
@@ -57,12 +47,7 @@ const AddRecipe = ({ logout, authenticated }) => {
         'description': description,
         'hearts': [user.uid]
     }
-     
-   //  if(isSubscribed){
-   //  setWriteError(null);
-   //  }
     try {
-    
       await db.ref("recipes").push({
         ...inputResult,
         timestamp: Date.now(),
@@ -77,14 +62,9 @@ const AddRecipe = ({ logout, authenticated }) => {
      setWriteError(error.message);
       }
      console.log(writeError);
-    }
-    
+    } 
    isSubscribed = false;
 }
-
-   
-    
- 
 
     return (
       <Container className='col-md-6 mt-3'>
@@ -92,7 +72,6 @@ const AddRecipe = ({ logout, authenticated }) => {
         <Form.Group controlId="name">
         <Form.Label>{nameIcon} Име</Form.Label>
            <Form.Control isInvalid={writeError.name !== undefined} placeholder="Въведи име..." name="name" type="text" onChange={e => setName(e.target.value)} value={name} />
-         
             {writeError.name !== undefined ? writeError.name.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
 
@@ -131,8 +110,6 @@ const AddRecipe = ({ logout, authenticated }) => {
            {writeError.description !== undefined ? writeError.description.map((error, index) => <Alert key={index} variant="danger mt-1">{error}</Alert>) : ''}
         </Form.Group>
         
-
-         
          <Button variant="primary" type="submit">
              Добави рецептата
           </Button>
@@ -140,5 +117,4 @@ const AddRecipe = ({ logout, authenticated }) => {
        </Container>
     )
 }
-
 export default AddRecipe

@@ -11,6 +11,7 @@ function validateAddRecipes (name,image,prepareTime,portions,description, catego
         }
        
     }
+    
     // image validations
     if(!image.includes('https://') && !image.includes('http://')){
         if(result.image === undefined){
@@ -22,7 +23,6 @@ function validateAddRecipes (name,image,prepareTime,portions,description, catego
        
     }
 
-
     //prepareTime validations 
     if(prepareTime <= 0){
         if(result.prepareTime === undefined){
@@ -32,7 +32,6 @@ function validateAddRecipes (name,image,prepareTime,portions,description, catego
             result.prepareTime.push('Времето за приготвяне не може да бъде 0 мунити.');
         }
     }
-
 
     // portions check
     if(portions <= 0){
@@ -65,7 +64,4 @@ function validateAddRecipes (name,image,prepareTime,portions,description, catego
      
     return result
 }
-
 export default validateAddRecipes;
-
- 

@@ -7,8 +7,6 @@ import { Row, Col, Button } from 'react-bootstrap';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import { useParams, Link } from 'react-router-dom';
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUtensils, faBirthdayCake, faCookie, faStroopwafel } from '@fortawesome/free-solid-svg-icons'
 
@@ -141,5 +139,4 @@ const Recipes = props => {
         </div>
     )
 }
-
 export default Recipes

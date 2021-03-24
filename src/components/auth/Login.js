@@ -1,12 +1,8 @@
 import { useState } from 'react'
 import React from 'react';
-
 import { Link } from "react-router-dom";
-
 import { signIn } from './auth';
-
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-
 import styles from './Login.module.css';
 
 const errorsType = {
@@ -58,15 +54,13 @@ const Login = props => {
 
   <Form.Group controlId="password">
     <Form.Label>Парола</Form.Label>
-    <Form.Control  
-              placeholder="Парола..."
-              name="password"
-              onChange={handlePassword}
-              value={password}
-              type="password" />
-  </Form.Group>
-          
-          
+      <Form.Control  
+                placeholder="Парола..."
+                name="password"
+                onChange={handlePassword}
+                value={password}
+                type="password" />
+    </Form.Group>
           <div>
             {error ? (
               <Alert variant="danger mt-2">{errorsType.hasOwnProperty(error) ? errorsType[error] : error}</Alert>
@@ -76,7 +70,6 @@ const Login = props => {
            </Button>
           </div>
           <hr />
-         
           <Form.Text className="font-weight-bold">
           Нямате акаунт? <Link className={styles.loginTitle} to="/register">Регистрация</Link>
           </Form.Text>
@@ -84,5 +77,4 @@ const Login = props => {
         </Container>
     )
 }
-
-export default Login  
+export default Login
