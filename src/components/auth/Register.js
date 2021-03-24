@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { signUp } from './auth';
-
 import styles from './Register.module.css';
-
 import { Form, Container, Button, Alert } from 'react-bootstrap';
 
 const Register = props => {
@@ -57,8 +55,6 @@ const Register = props => {
     <Form.Label>Потвърди парола</Form.Label>
       <Form.Control placeholder="Потвърди парола..." name="rePassword" type="password" onChange={handleRePassword} value={rePassword} />
     </Form.Group>
-           
-            
             <Button type="submit">Регистрация</Button>
             {error 
       ?  <Alert variant="danger mt-2">{error}</Alert>
@@ -72,5 +68,4 @@ const Register = props => {
         </Container>
     )
 }
-
 export default Register

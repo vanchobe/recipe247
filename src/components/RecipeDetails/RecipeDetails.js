@@ -19,7 +19,6 @@ const recipeNameIcon = <FontAwesomeIcon className={styles.recipeNameIcon} icon={
 const heartIcon = <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} />;
 const heartLikedIcon = <FontAwesomeIcon className={styles.heartLiked} icon={faHeart} />;
 
-
 const Recipes = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
@@ -90,7 +89,6 @@ const Recipes = props => {
      }
  }
  
-     
     return (
            <Container className="mt-2 d-flex justify-content-center">
         {recipes.map((recipe, index) => {
