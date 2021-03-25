@@ -1,5 +1,5 @@
 import style from './SearchRecipes.module.css';
-import { db } from "../../services/firebase"
+import { loadAllRecipes } from '../../services/recipeService';
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import ReactPaginate from 'react-paginate';
@@ -15,34 +15,30 @@ const SearchRecipes = props => {
     const [keyword, setKeyWord] = useState('');
     const [filteredRecipes, setFilteredRecipes] = useState([]);
 
-    const loadRecipes = (isSubscribed) => {
+    const fetchRecipes = async (isSubscribed) => {
       try {
-        db.ref("recipes").on("value", snapshot => {
+          let snapshot = await loadAllRecipes();
           let recipes = [];
           snapshot.forEach((snap) => {
-          
             let _id = snap.ref_.path.pieces_[1];
             recipes.push({...snap.val(), _id});
           });
           if(isSubscribed){
           setRecipes( recipes.reverse());
-          
           }
-          
-        });
-      } catch (error) {
-        if(isSubscribed){
-        setReadError(error.message);
+        } catch (error) {
+          if(isSubscribed){
+          setReadError(error.message);
+          }
         }
-      }
-    }
+     }
 
       useEffect(() => {
         let isSubscribed = true;
         if(isSubscribed){
         setReadError(null)
         }
-        loadRecipes(isSubscribed);
+        fetchRecipes(isSubscribed);
         return () => (isSubscribed = false)
       }, []);
 

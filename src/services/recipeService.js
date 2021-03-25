@@ -46,9 +46,8 @@ const loadRecipes = async (isSubscribed, categoryName) => {
 
   const loadAllRecipes = async () => {
         const ref =  db.ref("recipes");
-        const snapshot = await ref.once('value');
-        const value = snapshot;
-    return value
+        const snapshot = await ref.once('value');    
+    return snapshot
   }  
 
 export {
