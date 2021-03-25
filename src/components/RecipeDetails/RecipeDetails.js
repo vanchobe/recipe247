@@ -1,5 +1,6 @@
 import { auth } from "../../services/firebase";
 import { db } from "../../services/firebase"
+import { loadAllRecipes } from '../../services/recipeService';
 import { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import {Card, Button, Container, Row, Col} from 'react-bootstrap';
@@ -19,7 +20,7 @@ const recipeNameIcon = <FontAwesomeIcon className={styles.recipeNameIcon} icon={
 const heartIcon = <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} />;
 const heartLikedIcon = <FontAwesomeIcon className={styles.heartLiked} icon={faHeart} />;
 
-const Recipes = props => {
+const RecipeDetails = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
@@ -27,34 +28,36 @@ const Recipes = props => {
     const [isLiked, setIsLiked] = useState(false);
 
     const { recipeId } = useParams();
+
+    const fetchRecipe = async (isSubscribed) => {
+      try { 
+          let snapshot = await loadAllRecipes();
+           let recipes = [];
+           snapshot.forEach((snap) => {
+               let _id = snap.ref_.path.pieces_[1];
+               if(_id === recipeId){
+             recipes.push({...snap.val(), _id})
+           }
+           });
+           if(isSubscribed){
+               if(recipes.length > 0){
+           setRecipes( recipes );
+           setCreatorId(recipes[0].uid);
+           setIsLiked(recipes[0].hearts.find(x => x === user.uid))
+               }
+           }
+       } catch (error) {
+         setReadError(error.message);
+       }
+    }
     
       useEffect(() => {
         let isSubscribed = true;
-        setReadError(null)
-        try { 
-         db.ref("recipes").on("value", snapshot => {
-            let recipes = [];
-            snapshot.forEach((snap) => {
-                let _id = snap.ref_.path.pieces_[1];
-                if(_id === recipeId){
-              recipes.push({...snap.val(), _id})
-            }
-            });
-           
-            if(isSubscribed){
-                if(recipes.length > 0){
-            setRecipes( recipes );
-            setCreatorId(recipes[0].uid);
-            setIsLiked(recipes[0].hearts.find(x => x === user.uid))
-                }
-            }
-            
-          });
-        } catch (error) {
-          setReadError(error.message);
-        }
+         
+        fetchRecipe(isSubscribed);
+
         return () => (isSubscribed = false)
-      }, []);
+      }, [fetchRecipe]);
 
       const history = useHistory();
       const deleteRecipe = (id) => {
@@ -119,4 +122,4 @@ const Recipes = props => {
       </Container>
     )
 }
-export default Recipes
+export default RecipeDetails
