@@ -1,4 +1,4 @@
-import { db } from "../../services/firebase"
+import { loadAllRecipes } from '../../services/recipeService';
 import { useState, useEffect, useContext } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import { Link, useLocation } from "react-router-dom";
@@ -9,7 +9,6 @@ import {UserContext} from '../../helpers/UserContext';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 
-
 const Profile = props => {
     
     const [recipes, setRecipes] = useState([]);
@@ -18,36 +17,30 @@ const Profile = props => {
     const locationUrl = useLocation().pathname;
     const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 9);
     const user = useContext(UserContext);
-    const loadRecipes = (isSubscribed) => {
-      if(isSubscribed){
-        setReadError(null)
-        }
-      try {
-        db.ref("recipes").on("value", snapshot => {
-          let recipes = [];
-          snapshot.forEach((snap) => {
-          
-            let _id = snap.ref_.path.pieces_[1];
-            if(snap.val().uid === currentUserProfileId){
-            recipes.push({...snap.val(), _id});
-            }
-            
-          });
-          if(isSubscribed){
-          setRecipes( recipes.reverse() );
-          }
-          
-        });
-      } catch (error) {
-        if(isSubscribed){
-        setReadError(error.message);
-        }
-      }
-    }
 
+    async function fetchUserRecipes(isSubscribed) {
+      try {
+      let recipes = [];
+      let value =  await loadAllRecipes();
+      value.forEach((snap) => {
+        let _id = snap.ref_.path.pieces_[1];
+        if(snap.val().uid === currentUserProfileId){
+        recipes.push({...snap.val(), _id});
+      }})
+      if(isSubscribed){
+        setRecipes( recipes.reverse() );
+      }
+    } catch (error) {
+    if(isSubscribed){
+    setReadError(error.message);
+    }
+    }
+  }
       useEffect(() => {
         let isSubscribed = true;
-        loadRecipes(isSubscribed)
+
+        fetchUserRecipes(isSubscribed)
+
         return () => (isSubscribed = false)
       }, []);
 
@@ -106,9 +99,7 @@ const Profile = props => {
     (
         <div>
           <Row> 
-            <Col md='3'>
-          {myProfileBadge}
-            </Col>
+            <Col md='3'> {myProfileBadge}</Col>
             <Col  md='9'>
 
         {currentPageRecipes.length === 0 ? <Loader className="recipes-loader" type="Bars" color="#242582" height={80} width={80} /> : currentPageRecipes}
