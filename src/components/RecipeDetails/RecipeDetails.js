@@ -19,7 +19,7 @@ const recipeNameIcon = <FontAwesomeIcon className={styles.recipeNameIcon} icon={
 const heartIcon = <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} />;
 const heartLikedIcon = <FontAwesomeIcon className={styles.heartLiked} icon={faHeart} />;
 
-const Recipes = props => {
+const RecipeDetails = props => {
     const [user, setUser] = useState(auth().currentUser);
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
@@ -119,4 +119,4 @@ const Recipes = props => {
       </Container>
     )
 }
-export default Recipes
+export default RecipeDetails

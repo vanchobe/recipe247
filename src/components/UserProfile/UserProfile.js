@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { Row, Col } from 'react-bootstrap';
 import styles from './UserProfile.module.css';
 
-const Profile = props => {
+const UserProfile = props => {
     const [recipes, setRecipes] = useState([]);
     const [readError, setReadError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
@@ -132,4 +132,4 @@ const Profile = props => {
     )
 }
 
-export default Profile
+export default UserProfile
