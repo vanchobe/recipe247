@@ -57,7 +57,7 @@ const RecipeDetails = props => {
         fetchRecipe(isSubscribed);
 
         return () => (isSubscribed = false)
-      }, [fetchRecipe]);
+      }, []);
 
       const history = useHistory();
       const deleteRecipe = (id) => {
@@ -87,6 +87,7 @@ const RecipeDetails = props => {
        await db.ref('recipes/' + recipeId).update({
          ...inputResult
        });
+       fetchRecipe(isSubscribed)
      } catch (error) {
       
      }
