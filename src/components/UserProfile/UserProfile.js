@@ -1,4 +1,4 @@
-import { db } from "../../services/firebase"
+import { loadAllRecipes } from '../../services/recipeService';
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import { Link, useLocation } from "react-router-dom";
@@ -14,36 +14,27 @@ const Profile = props => {
     const locationUrl = useLocation().pathname;
     const currentUserProfileId = locationUrl.substring(locationUrl.indexOf("/") + 14);
   
-    const loadRecipes = (isSubscribed) => {
-      if(isSubscribed){
-        setReadError(null)
-        }
+    async function fetchUserRecipes(isSubscribed) {
       try {
-        db.ref("recipes").on("value", snapshot => {
-          let recipes = [];
-          snapshot.forEach((snap) => {
-          
-            let _id = snap.ref_.path.pieces_[1];
-            if(snap.val().uid === currentUserProfileId){
-            recipes.push({...snap.val(), _id});
-            }
-            
-          });
-          if(isSubscribed){
-          setRecipes( recipes.reverse() );
-          }
-          
-        });
-      } catch (error) {
-        if(isSubscribed){
-        setReadError(error.message);
-        }
+      let recipes = [];
+      let value =  await loadAllRecipes();
+      value.forEach((snap) => {
+        let _id = snap.ref_.path.pieces_[1];
+        if(snap.val().uid === currentUserProfileId){
+        recipes.push({...snap.val(), _id});
+      }})
+      if(isSubscribed){
+        setRecipes( recipes.reverse() );
       }
+    } catch (error) {
+    if(isSubscribed){
+    setReadError(error.message);
     }
-
+    }
+  }
       useEffect(() => {
         let isSubscribed = true;
-        loadRecipes(isSubscribed)
+        fetchUserRecipes(isSubscribed)
         return () => (isSubscribed = false)
       }, []);
       
@@ -107,9 +98,7 @@ const Profile = props => {
     (
         <div>
           <Row> 
-            <Col md='3'>
-          {myProfileBadge}
-            </Col>
+            <Col md='3'> {myProfileBadge} </Col>
             <Col  md='9'>
             
         {currentPageRecipes}
