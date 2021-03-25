@@ -84,6 +84,7 @@ const RecipeDetails = props => {
        await db.ref('recipes/' + recipeId).update({
          ...inputResult
        });
+       fetchRecipe(isSubscribed)
      } catch (error) {
       
      }
