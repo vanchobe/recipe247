@@ -1,5 +1,5 @@
 import style from './Recipes.module.css';
-import { db } from "../../services/firebase"
+import {loadRecipes} from '../../services/recipeService';
 import { useState, useEffect } from 'react';
 import  Recipe  from '../Recipe/Recipe';
 import ReactPaginate from 'react-paginate';
@@ -21,56 +21,21 @@ const Recipes = props => {
     const [currentPage, setCurrentPage] = useState(0);
     
     const { categoryName } = useParams();
-     
-    const loadRecipes = (isSubscribed, type) => {
-      try {
-       if(categoryName === 'all'){
-        db.ref("recipes").on("value", snapshot => {
-          let recipes = [];
-          snapshot.forEach((snap) => {
-          
-            let _id = snap.ref_.path.pieces_[1];
-            recipes.push({...snap.val(), _id});
-            
-          });
-          if(isSubscribed){
-          setRecipes( recipes.reverse() );
-          setCurrentPage(0);
-          }
-          
-        });
-       } else {
-        db.ref("recipes")
-        .orderByChild('category')
-        .equalTo(`${categoryName}`) 
-        .on("value", snapshot => {
-          let recipes = [];
-          snapshot.forEach((snap) => {
-          
-            let _id = snap.ref_.path.pieces_[1];
-            recipes.push({...snap.val(), _id});
-            
-          });
-          if(isSubscribed){
-          setRecipes( recipes.reverse() );
-          setCurrentPage(0);
-          }
-          
-        });
-       }
-      } catch (error) {
-        if(isSubscribed){
-        setReadError(error.message);
-        }
-      }
-    }
 
       useEffect(() => {
         let isSubscribed = true;
         if(isSubscribed){
         setReadError(null)
         }
-        loadRecipes(isSubscribed, 'all');
+        async function fetchData() {
+          let result =  await loadRecipes(isSubscribed, categoryName);
+          if(isSubscribed){
+          setRecipes(result[0]);
+          setCurrentPage(result[1]);
+          setReadError(result[2]);
+          }
+        }
+        fetchData(); 
         return () => (isSubscribed = false)
       }, [categoryName]);
 
