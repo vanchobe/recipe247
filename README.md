@@ -2,6 +2,8 @@
 
 Този проект беше създаден с  [Create React App](https://github.com/facebook/create-react-app).
 
+Тук може да видите проекта Live: https://recipes-two-four-seven.netlify.app/
+
 ## Нека започнем
 
 За да стартирате приложението може първо да въведете:
